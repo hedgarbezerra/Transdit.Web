@@ -18,13 +18,11 @@ steps:
 - script: |
     npm install -g @angular/cli
     npm install
+    ng build --prod
   displayName: 'npm install and build'
 
-- script: | 
-    ng build --prod
-  workingDirectory: '$(Build.ArtifactStagingDirectory)/transdit'
-
 - script: npm test
+
 - task: PublishTestResults@2
   condition: succeededOrFailed()
   inputs:
