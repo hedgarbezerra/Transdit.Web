@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
+import { MatCardModule } from '@angular/material/card';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SignupComponent } from './components/users/signup/signup.component';
@@ -11,6 +14,7 @@ import { PasswordChangeComponent } from './components/users/password-change/pass
 import { EmailChangeComponent } from './components/users/email-change/email-change.component';
 import { PlanChangeComponent } from './components/users/plan-change/plan-change.component';
 import { MainComponent } from './components/transcriptions/main/main.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -26,7 +30,10 @@ import { MainComponent } from './components/transcriptions/main/main.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatCardModule,
+    MatSlideToggleModule
   ],
   providers: [],
   bootstrap: [AppComponent]
