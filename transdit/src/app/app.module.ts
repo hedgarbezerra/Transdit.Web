@@ -1,8 +1,11 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatMenuModule } from '@angular/material/menu';
 
 import { MatCardModule } from '@angular/material/card';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,7 +17,10 @@ import { PasswordChangeComponent } from './components/users/password-change/pass
 import { EmailChangeComponent } from './components/users/email-change/email-change.component';
 import { PlanChangeComponent } from './components/users/plan-change/plan-change.component';
 import { MainComponent } from './components/transcriptions/main/main.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HomeComponent } from './components/main/home/home.component';
+import { NavbarComponent } from './components/main/navbar/navbar.component';
+import { FooterComponent } from './components/main/footer/footer.component';
+import { TranscribeComponent } from './components/transcriptions/transcribe/transcribe.component';
 
 @NgModule({
   declarations: [
@@ -26,14 +32,19 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     PasswordChangeComponent,
     EmailChangeComponent,
     PlanChangeComponent,
-    MainComponent
+    MainComponent,
+    HomeComponent,
+    NavbarComponent,
+    FooterComponent,
+    TranscribeComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MatCardModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatMenuModule
   ],
   providers: [],
   bootstrap: [AppComponent]
