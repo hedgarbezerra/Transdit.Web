@@ -23,6 +23,7 @@ import { NavbarComponent } from './components/main/navbar/navbar.component';
 import { FooterComponent } from './components/main/footer/footer.component';
 import { TranscribeComponent } from './components/transcriptions/transcribe/transcribe.component';
 import { UsetermsComponent } from './components/main/useterms/useterms.component';
+import { UseinformationsComponent } from './components/main/useinformations/useinformations.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { UsetermsComponent } from './components/main/useterms/useterms.component
     NavbarComponent,
     FooterComponent,
     TranscribeComponent,
-    UsetermsComponent
+    UsetermsComponent,
+    UseinformationsComponent
   ],
   imports: [
     BrowserModule,
