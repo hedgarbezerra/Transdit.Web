@@ -26,7 +26,7 @@ const routes: Routes = [
           {
             path: '',
             pathMatch: 'full',
-            redirectTo: 'app/transcricoes/listar'
+            redirectTo: 'transcricoes/listar'
           },
           {
             path: 'transcrever',

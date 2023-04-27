@@ -5,6 +5,7 @@ import { MatMenuModule } from '@angular/material/menu';
 
 import { MatCardModule } from '@angular/material/card';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import {MatDialogModule} from '@angular/material/dialog';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -21,6 +22,7 @@ import { HomeComponent } from './components/main/home/home.component';
 import { NavbarComponent } from './components/main/navbar/navbar.component';
 import { FooterComponent } from './components/main/footer/footer.component';
 import { TranscribeComponent } from './components/transcriptions/transcribe/transcribe.component';
+import { UsetermsComponent } from './components/main/useterms/useterms.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,8 @@ import { TranscribeComponent } from './components/transcriptions/transcribe/tran
     HomeComponent,
     NavbarComponent,
     FooterComponent,
-    TranscribeComponent
+    TranscribeComponent,
+    UsetermsComponent
   ],
   imports: [
     BrowserModule,
@@ -44,7 +47,8 @@ import { TranscribeComponent } from './components/transcriptions/transcribe/tran
     BrowserAnimationsModule,
     MatCardModule,
     MatSlideToggleModule,
-    MatMenuModule
+    MatMenuModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

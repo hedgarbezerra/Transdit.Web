@@ -1,3 +1,24 @@
-<footer>
-  
+<footer class="page-footer">
+  <div class="container">
+    <div class="row">
+      <div class="col l6 s12">
+        <h2 class="white-text">Transdit</h2>
+        <p class="grey-text text-lighten-4">Transcrições em diversos idiomas e opções de mídias variadas com indicadores de acurácia,
+           para mais informações entrem em contato.</p>
+      </div>
+      <div class="col l4 offset-l2 s12">
+        <h5 class="white-text">Links</h5>
+        <ul>
+          <li><button class="grey-text text-lighten-3" mat-button (click)="showUserTerms()">Termos de uso</button></li>
+          <li><a class="grey-text text-lighten-3" href="#!">Informações sobre uso</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-copyright">
+    <div class="container">
+    © {{ currentDate | date: 'yyyy' }} Transdit Ltda.
+    <a class="grey-text text-lighten-4 right" href="mailto:contato.transdit@outlook.com">Entre em contato conosco</a>
+    </div>
+  </div>
 </footer>
