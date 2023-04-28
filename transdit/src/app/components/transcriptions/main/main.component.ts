@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { TranscriptionItem } from 'src/app/classes/Transcriptions/TranscriptionItem';
 
 @Component({
   selector: 'app-main',
@@ -7,4 +8,10 @@ import { Component } from '@angular/core';
 })
 export class MainComponent {
 
+  transcriptions: Array<TranscriptionItem> = []
+  pagination = {
+    pageSize: 10,
+    pageIndex: 1,
+    totalCount: 0
+  }
 }

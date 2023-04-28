@@ -1,4 +1,4 @@
-import { DefaultResponse } from "./DefaultResponse"
+import { DefaultResponse } from "../DefaultResponse"
 
 export class Token {
   token!: string

@@ -1,7 +1,7 @@
 export class DefaultResponse<Type> {
   successful: boolean
   data: Type
-  messages!: string[]
+  messages!: Array<string>
 
   constructor(success: boolean, data: Type){
     this.successful = success;

@@ -31,8 +31,11 @@
             ],
             "scripts": [
               "./node_modules/materialize-css/dist/js/materialize.js",
-              "./node_modules/moment/dist/moment.js"
-            ]
+              "./node_modules/moment/moment.js"
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": ["node_modules/"]
+            }
           },
           "configurations": {
             "production": {

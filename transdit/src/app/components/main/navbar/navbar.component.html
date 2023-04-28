@@ -1,11 +1,23 @@
-<nav class="nav-main" >
+<nav class="nav-main" *ngIf="isAuthenticated()">
   <div class="nav-wrapper">
     <a routerLink="" class="brand-logo"><i class="material-icons">home</i>Início</a>
     <ul class="right hide-on-med-and-down">
-      <li><a href="sass.html"><i class="material-icons">search</i></a></li>
-      <li><a href="badges.html"><i class="material-icons">view_module</i></a></li>
-      <li><a href="collapsible.html"><i class="material-icons">refresh</i></a></li>
-      <li><a href="mobile.html"><i class="material-icons">more_vert</i></a></li>
+      <li><a routerLink="app/transcricoes"><i class="material-icons left">transcribe</i>Transcrições</a></li>
+      <li><a routerLink="app/usuarios"><i class="material-icons right">manage_accounts</i></a></li>
+      <li><a class="clickable" (click)="logout()"><i class="material-icons">logout</i></a></li>
+      <!-- <li><a routerLink="app/usuarios/plano"><i class="material-icons">search</i></a></li>
+      <li><a routerLink="app/usuarios/email"><i class="material-icons">search</i></a></li>
+      <li><a routerLink="app/usuarios/senha"><i class="material-icons">search</i></a></li> -->
+    </ul>
+  </div>
+</nav>
+
+<nav class="nav-main" *ngIf="!isAuthenticated()">
+  <div class="nav-wrapper" >
+    <a routerLink="" class="brand-logo"><i class="material-icons">home</i>Início</a>
+    <ul class="right hide-on-med-and-down">
+      <li><a routerLink="cadastro"><i class="material-icons">person_add</i>Cadastro</a></li>
+      <li><a routerLink="login"><i class="material-icons">login</i>Login</a></li>
     </ul>
   </div>
 </nav>

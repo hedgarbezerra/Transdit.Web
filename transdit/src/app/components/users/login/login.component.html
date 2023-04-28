@@ -1,2 +1,9 @@
-<p>login works!</p>
-asdasdasd
+<form id="loginForm" class="example-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  <mat-form-field class="example-full-width">
+    <mat-label>Telephone</mat-label>
+    <span matPrefix>+1 &nbsp;</span>
+    <input type="tel" matInput placeholder="555-555-1234">
+    <mat-icon matSuffix>mode_edit</mat-icon>
+  </mat-form-field>
+  <button form="loginForm" type="submit" [disabled]="!loginForm.valid">Entrar</button>
+</form>

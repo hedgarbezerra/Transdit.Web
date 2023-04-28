@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { AppRoutingModule } from 'src/app/app-routing.module'
 
 @Component({
   selector: 'app-navbar',
@@ -10,6 +9,12 @@ import { AppRoutingModule } from 'src/app/app-routing.module'
 export class NavbarComponent {
 
   ngOnInit(): void {
+  }
+
+  isAuthenticated(){
+    return true;
+  }
+  logout(){
 
   }
 }

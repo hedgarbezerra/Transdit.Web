@@ -9,12 +9,13 @@ import { PasswordChangeComponent } from './components/users/password-change/pass
 import { PlanChangeComponent } from './components/users/plan-change/plan-change.component';
 import { SignupComponent } from './components/users/signup/signup.component';
 import { MainComponent } from './components/transcriptions/main/main.component';
+import { UserMainComponent } from './components/users/user-main/user-main.component';
 
 const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'app/transcricoes'
+    redirectTo: 'app/transcricoes/listar'
   },
   {
     path: 'app',
@@ -22,12 +23,8 @@ const routes: Routes = [
     children: [
       {
         path: 'transcricoes',
+        component: MainComponent,
         children:[
-          {
-            path: '',
-            pathMatch: 'full',
-            redirectTo: 'transcricoes/listar'
-          },
           {
             path: 'transcrever',
             component: TranscribeComponent
@@ -40,6 +37,7 @@ const routes: Routes = [
       },
       {
         path: 'usuarios',
+        component: UserMainComponent,
         children:[
           {
             path: 'email',

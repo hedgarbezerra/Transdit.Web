@@ -1,11 +1,10 @@
 import { NgModule } from '@angular/core';
+import { HttpClientModule} from '@angular/common/http';
+import { CommonModule, NgIf} from '@angular/common'
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatMenuModule } from '@angular/material/menu';
-
-import { MatCardModule } from '@angular/material/card';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import {MatDialogModule} from '@angular/material/dialog';
+import { FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { MaterialExportModule } from './helpers/material.module';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -24,6 +23,8 @@ import { FooterComponent } from './components/main/footer/footer.component';
 import { TranscribeComponent } from './components/transcriptions/transcribe/transcribe.component';
 import { UsetermsComponent } from './components/main/useterms/useterms.component';
 import { UseinformationsComponent } from './components/main/useinformations/useinformations.component';
+import { UserMainComponent } from './components/users/user-main/user-main.component';
+import { TranscriptionItemComponent } from './components/transcriptions/transcription-item/transcription-item.component';
 
 @NgModule({
   declarations: [
@@ -41,16 +42,19 @@ import { UseinformationsComponent } from './components/main/useinformations/usei
     FooterComponent,
     TranscribeComponent,
     UsetermsComponent,
-    UseinformationsComponent
+    UseinformationsComponent,
+    UserMainComponent,
+    TranscriptionItemComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MatCardModule,
-    MatSlideToggleModule,
-    MatMenuModule,
-    MatDialogModule
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MaterialExportModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
