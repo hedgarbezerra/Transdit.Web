@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import {FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@angular/forms';
-import {ErrorStateMatcher} from '@angular/material/core';
-import { PasswordValidator } from 'src/app/helpers/custom-validators/password-validator';
+import { getFormFromGroup } from 'src/app/helpers/HelperFunctions';
 
 
 @Component({
@@ -10,13 +9,24 @@ import { PasswordValidator } from 'src/app/helpers/custom-validators/password-va
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
+
+  hidePassword: boolean = true;
+  
+  get email() :FormControl{
+    return this.getForm('email');
+  }
+  get password() :FormControl{
+    return this.getForm('password');
+  }
+
   loginForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('', [Validators.required, PasswordValidator]),
+    password: new FormControl('', [Validators.required]),
   });
 
   onSubmit() {
-    // TODO: Use EventEmitter with form value
     console.warn(this.loginForm.value);
   }
+
+  getForm(name : string){ return getFormFromGroup(name, this.loginForm) }
 }

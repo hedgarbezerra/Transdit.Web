@@ -18,7 +18,6 @@ export class FooterComponent {
     const dialogRef = this.dialog.open(UsetermsComponent, { enterAnimationDuration: '200'});
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
     });
   }
 
@@ -26,7 +25,6 @@ export class FooterComponent {
     const dialogRef = this.dialog.open(UseinformationsComponent, { enterAnimationDuration: '200'});
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
     });
   }
 }

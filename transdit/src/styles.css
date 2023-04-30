@@ -9,11 +9,30 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .main {
   display: flex;
-  min-height: 90vh;
+  min-height: 80vh;
   flex-direction: column;
   flex: 1 0 auto;
 }
 
 .clickable{
   cursor: pointer;
+}
+
+button:focus {
+  background-color: var(--main-bg-color) !important;
+  color: whitesmoke !important;
+}
+.mat-mdc-text-field-wrapper:not(.mdc-text-field--outlined) .mat-mdc-form-field-infix
+{
+  padding-top: 15px !important;
+  padding-bottom: 5px !important;
+}
+.mat-mdc-form-field {
+  display: flex !important;
+}
+.mdc-text-field--filled:not(.mdc-text-field--disabled) {
+  background-color: #f8e9ff8a !important;
+}
+.mat-mdc-unelevated-button.mat-primary:not(:disabled) {
+  background-color: var(--main-bg-color) !important;
 }

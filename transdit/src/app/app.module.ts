@@ -25,6 +25,7 @@ import { UsetermsComponent } from './components/main/useterms/useterms.component
 import { UseinformationsComponent } from './components/main/useinformations/useinformations.component';
 import { UserMainComponent } from './components/users/user-main/user-main.component';
 import { TranscriptionItemComponent } from './components/transcriptions/transcription-item/transcription-item.component';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,7 @@ import { TranscriptionItemComponent } from './components/transcriptions/transcri
     MaterialExportModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [{provide: MAT_DATE_LOCALE, useValue: 'pt-br'},],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
