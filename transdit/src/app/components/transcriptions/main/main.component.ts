@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { debounceTime } from 'rxjs';
 import { TranscriptionItem } from 'src/app/classes/Transcriptions/TranscriptionItem';
 
 @Component({
@@ -7,7 +8,7 @@ import { TranscriptionItem } from 'src/app/classes/Transcriptions/TranscriptionI
   styleUrls: ['./main.component.css']
 })
 export class MainComponent {
-
+  
   transcriptions: Array<TranscriptionItem> = []
   pagination = {
     pageSize: 10,

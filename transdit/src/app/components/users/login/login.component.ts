@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@angular/forms';
 import { getFormFromGroup } from 'src/app/helpers/HelperFunctions';
+import { UsersServiceService } from 'src/app/services/users/users-service.service';
 
 
 @Component({
@@ -9,9 +10,9 @@ import { getFormFromGroup } from 'src/app/helpers/HelperFunctions';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-
+  constructor(private userService : UsersServiceService){}
   hidePassword: boolean = true;
-  
+
   get email() :FormControl{
     return this.getForm('email');
   }
