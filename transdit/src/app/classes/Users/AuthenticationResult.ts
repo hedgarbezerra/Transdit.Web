@@ -3,7 +3,7 @@ import { DefaultResponse } from "../DefaultResponse"
 export interface Token {
   token: string
   userName: string
-  expiracy: string
+  expiracy: Date
   isValid: boolean
 }
 

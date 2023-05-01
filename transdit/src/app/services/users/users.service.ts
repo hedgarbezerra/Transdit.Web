@@ -9,16 +9,9 @@ import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class UsersServiceService {
+export class UsersService {
 
-  constructor(private httpClient:HttpClient) {
-    let httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'x-api-version': environment.apiVersion,
-      })
-    }
-  }
+  constructor(private httpClient:HttpClient) {}
 
   getPlans() : Observable<Plan[]>{
     var results = this.httpClient.get<Plan[]>(`${environment.apiUrl}/plans`);

@@ -10,16 +10,19 @@ import { PlanChangeComponent } from './components/users/plan-change/plan-change.
 import { SignupComponent } from './components/users/signup/signup.component';
 import { MainComponent } from './components/transcriptions/main/main.component';
 import { UserMainComponent } from './components/users/user-main/user-main.component';
+import { guards } from './services/users/authentication.service';
 
 const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'app/transcricoes/listar'
+    redirectTo: 'app'
   },
   {
     path: 'app',
-    canActivate:[ ],//criar guard que irá verificar o token
+    canActivate:[guards.canActivateAuthenticated],
+    canActivateChild: [guards.canActivateAuthenticatedChild],
+    component: MainComponent,
     children: [
       {
         path: 'transcricoes',
@@ -78,4 +81,5 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

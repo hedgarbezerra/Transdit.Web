@@ -18,3 +18,8 @@ export interface OutputUser {
   termsAgreed: boolean
   isConfirmed: boolean
 }
+
+export interface Login{
+  username: string
+  email: string
+}

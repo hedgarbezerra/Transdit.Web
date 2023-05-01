@@ -1,4 +1,4 @@
-import { catchError } from 'rxjs/operators';
+import { catchError, retry } from 'rxjs/operators';
 import { Component } from '@angular/core';
 import * as moment from 'moment';
 import { Plan } from 'src/app/classes/Plans/Plans';
@@ -7,11 +7,11 @@ import { UsetermsComponent } from '../../main/useterms/useterms.component';
 import {FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@angular/forms';
 import { MinuminAgeValidator, SameAs } from 'src/app/helpers/custom-validators/password-validator';
 import { getFormFromGroup } from 'src/app/helpers/HelperFunctions';
-import { UsersServiceService } from 'src/app/services/users/users-service.service';
+import { UsersService } from 'src/app/services/users/users.service';
 import { InputUser } from 'src/app/classes/Users/Users';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { throwError, EMPTY } from 'rxjs';
+import { EMPTY } from 'rxjs';
 import { UserOperationResult } from 'src/app/classes/Users/UserOperationResult';
 
 @Component({
@@ -20,7 +20,7 @@ import { UserOperationResult } from 'src/app/classes/Users/UserOperationResult';
   styleUrls: ['./signup.component.css']
 })
 export class SignupComponent {
-  constructor(public dialog: MatDialog, private router: Router, private userService : UsersServiceService, private snackBar: MatSnackBar){}
+  constructor(public dialog: MatDialog, private router: Router, private userService : UsersService, private snackBar: MatSnackBar){}
 
   planos!: Array<Plan>;
   selectedPlan? : Plan;
@@ -59,12 +59,12 @@ export class SignupComponent {
           this.snackBar.open(err.error, 'Fechar', { duration: 7000});
 
         return EMPTY;
-      }))
-      ?.subscribe((plans) => this.planos = plans)
+      }), retry({ count: 3, delay: 500 }))
+      .subscribe((plans) => this.planos = plans)
   }
 
   CreateNewUser(){
-    let user = this.newUserForm.value as unknown as InputUser;
+    let user = this.newUserForm.value as InputUser;
     let result = this.userService.createUser(user)
       .pipe(catchError(err => {
         if(err.status == 400){

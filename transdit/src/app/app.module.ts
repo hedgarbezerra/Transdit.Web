@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { HttpClientModule} from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { CommonModule, NgIf} from '@angular/common'
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -26,6 +26,7 @@ import { UseinformationsComponent } from './components/main/useinformations/usei
 import { UserMainComponent } from './components/users/user-main/user-main.component';
 import { TranscriptionItemComponent } from './components/transcriptions/transcription-item/transcription-item.component';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { AuthInterceptor } from './helpers/AuthInterceptor';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,9 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
     MaterialExportModule,
     HttpClientModule
   ],
-  providers: [{provide: MAT_DATE_LOCALE, useValue: 'pt-br'},],
+  providers: [{provide: MAT_DATE_LOCALE, useValue: 'pt-br'},
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
