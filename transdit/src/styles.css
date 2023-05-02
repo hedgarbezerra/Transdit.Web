@@ -6,7 +6,6 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
-
 .main {
   display: flex;
   min-height: 80vh;
@@ -35,4 +34,8 @@ button:focus {
 }
 .mat-mdc-unelevated-button.mat-primary:not(:disabled) {
   background-color: var(--main-bg-color) !important;
+}
+
+nav ul li.active {
+  background-color: rgba(0, 0, 0, 0.3) !important;
 }

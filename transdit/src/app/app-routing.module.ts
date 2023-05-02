@@ -67,8 +67,12 @@ const routes: Routes = [
     component: LoginComponent
   },
   {
-    path: 'recuperacao',
+    path: 'senha-perdida',
     component: RecoveryComponent
+  },
+  {
+    path: 'recuperacao',
+    component: PasswordChangeComponent
   },
   {
     path: 'confirmacao',

@@ -1,4 +1,4 @@
-export interface InputUser {
+export interface InputUser  {
   email: string
   password: string
   name: string
@@ -20,6 +20,19 @@ export interface OutputUser {
 }
 
 export interface Login{
-  username: string
   email: string
+  password: string
+}
+
+export interface PasswordReset{
+  email: string
+  token: string
+  password: string
+  passwordConfirm: string
+}
+
+export interface PasswordUpdate{
+  password: string
+  newPassword: string
+  newPasswordConfirm: string
 }

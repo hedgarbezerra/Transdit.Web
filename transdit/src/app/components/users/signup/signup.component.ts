@@ -6,7 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { UsetermsComponent } from '../../main/useterms/useterms.component';
 import {FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@angular/forms';
 import { MinuminAgeValidator, SameAs } from 'src/app/helpers/custom-validators/password-validator';
-import { getFormFromGroup } from 'src/app/helpers/HelperFunctions';
+import { HandleRequestError, getFormFromGroup } from 'src/app/helpers/HelperFunctions';
 import { UsersService } from 'src/app/services/users/users.service';
 import { InputUser } from 'src/app/classes/Users/Users';
 import { Router } from '@angular/router';
@@ -55,8 +55,8 @@ export class SignupComponent {
 
     var plansObservable = this.userService.getPlans()
       .pipe(catchError(err =>{
-        if(err.status == 500)
-          this.snackBar.open(err.error, 'Fechar', { duration: 7000});
+        let errorWithCode = HandleRequestError(err);
+        this.snackBar.open(errorWithCode[1], 'Fechar', { duration: 5000});
 
         return EMPTY;
       }), retry({ count: 3, delay: 500 }))
@@ -65,28 +65,21 @@ export class SignupComponent {
 
   CreateNewUser(){
     let user = this.newUserForm.value as InputUser;
-    let result = this.userService.createUser(user)
+    this.userService.createUser(user)
       .pipe(catchError(err => {
-        if(err.status == 400){
-          //erros de validação
-          let errAsResult = err.error as UserOperationResult;
-          let actualError = errAsResult.messages.join(' \n');
-          this.snackBar.open(actualError, 'Fechar', { duration: 10000});
-        }
-        else if(err.status == 500)
-          this.snackBar.open(err.error, 'Fechar', { duration: 7000});
+        let errorWithCode = HandleRequestError(err);
+        this.snackBar.open(errorWithCode[1], 'Fechar', { duration: 5000});
 
         return EMPTY;
         }))
-      ?.subscribe((operationResult) =>{
+      ?.subscribe((operationResult: UserOperationResult) =>{
         if(operationResult.successful){
-          this.snackBar.open('Usuário criado com sucesso. Você será redirecionado(a) em breve', 'Fechar', { duration: 5000, })
-          setTimeout(() => {
-            this.router.navigate(['/login'])
-          }, 3000);
+          this.newUserForm.reset();
+          this.snackBar.open('Usuário criado com sucesso. Você será redirecionado(a) em breve', 'Fechar', { duration: 5000 });
+          setTimeout(() => { this.router.navigate(['/login']) }, 5000);
         }
         else
-          this.snackBar.open('Houve algum problema com inesperado, tente novamente em instantes', 'Fechar', { duration: 5000, })
+          this.snackBar.open(operationResult.messages.join(' \n'), 'Fechar', { duration: 5000, })
       })
   }
 

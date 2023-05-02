@@ -1,4 +1,4 @@
-import { InputUser } from '../../classes/Users/Users';
+import { InputUser, PasswordReset, PasswordUpdate } from '../../classes/Users/Users';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
@@ -21,5 +21,20 @@ export class UsersService {
   createUser(user:InputUser) : Observable<UserOperationResult>{
     var result = this.httpClient.post<UserOperationResult>(`${environment.apiUrl}/users`, user);
     return result;
+  }
+
+  recoverPassword(email: string) : Observable<UserOperationResult>{
+    var results = this.httpClient.get<UserOperationResult>(`${environment.apiUrl}/users/password/recovery/${email}`);
+    return results;
+  }
+
+  resetPassword(resetPassword: PasswordReset): Observable<UserOperationResult> {
+    var results = this.httpClient.post<UserOperationResult>(`${environment.apiUrl}/users/password/reset`, resetPassword);
+    return results;
+  }
+
+  UpdatePassword(updatePassword: PasswordUpdate): Observable<UserOperationResult> {
+    var results = this.httpClient.patch<UserOperationResult>(`${environment.apiUrl}/users/password/change`, updatePassword);
+    return results;
   }
 }

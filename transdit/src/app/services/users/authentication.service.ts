@@ -35,30 +35,8 @@ export class AuthenticationService {
     return this.httpClient.post<AuthenticationResult>(`${environment.apiUrl}/authentication`, login) ;
   }
 
-  login(login: Login){
-    this.authenticate(login)
-    .pipe(catchError(err => {
-      if(err.status == 400){
-        let errAsResult = err.error as AuthenticationResult;
-        let actualError = errAsResult.messages.join(' \n');
-        this.snackBar.open(actualError, 'Fechar', { duration: 10000});
-      }
-      else if(err.status == 500)
-        this.snackBar.open(err.error, 'Fechar', { duration: 7000});
-
-      return EMPTY;
-    }))
-    .subscribe((authResult)=>{
-      if(authResult.successful){
-        this.snackBar.open('Conectado com sucesso, você será redirecionado(a).', 'Fechar', { duration: 2500});
-        setTimeout(() => this.router.navigate(['/app']), 3000);
-
-        let content = JSON.stringify(authResult.data);
-        localStorage.setItem('jwt-token', content);
-      }
-      else
-        this.snackBar.open(authResult.messages.join(' \n'), 'Fechar', { duration: 7000});
-    })
+  login(login: Login) : Observable<AuthenticationResult>{
+    return this.authenticate(login);
   }
 
   async logout(){
