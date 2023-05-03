@@ -1,0 +1,25 @@
+<form [formGroup]="recoveryForm" (ngSubmit)="onSubmit()" >
+  <div class="row">
+    <div class="col s12">
+      <h1 class="center">Recuperar senha</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col s12 l12 center-align">
+      <mat-form-field appearance="fill" hintLabel="obrigatório">
+        <mat-label>E-mail</mat-label>
+        <input matInput type="email" formControlName="email" required autocomplete="email">
+        <mat-error *ngIf="email.errors?.['required']">Email é obrigatório</mat-error>
+        <mat-error *ngIf="email.errors?.['email']">Deve ser utilizado um e-mail válido</mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col s12">
+      <button type="submit" mat-flat-button color="primary" class="right" [disabled]="recoveryForm.invalid">
+        <mat-icon>password</mat-icon>
+        Recuperar
+      </button>
+    </div>
+  </div>
+</form>
