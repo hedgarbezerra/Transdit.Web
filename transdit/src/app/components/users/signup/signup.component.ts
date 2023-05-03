@@ -52,27 +52,15 @@ export class SignupComponent {
   get termsAcceptedForm(){ return this.getForm('termsAccepted');}
 
   ngOnInit(): void {
-
-    var plansObservable = this.userService.getPlans()
-      .pipe(catchError(err =>{
-        let errorWithCode = HandleRequestError(err);
-        this.snackBar.open(errorWithCode[1], 'Fechar', { duration: 5000});
-
-        return EMPTY;
-      }), retry({ count: 3, delay: 500 }))
+    this.userService.getPlans()
+      .pipe(retry({ count: 2, delay: 1500 }))
       .subscribe((plans) => this.planos = plans)
   }
 
   CreateNewUser(){
     let user = this.newUserForm.value as InputUser;
     this.userService.createUser(user)
-      .pipe(catchError(err => {
-        let errorWithCode = HandleRequestError(err);
-        this.snackBar.open(errorWithCode[1], 'Fechar', { duration: 5000});
-
-        return EMPTY;
-        }))
-      ?.subscribe((operationResult: UserOperationResult) =>{
+      .subscribe((operationResult: UserOperationResult) =>{
         if(operationResult.successful){
           this.newUserForm.reset();
           this.snackBar.open('Usuário criado com sucesso. Você será redirecionado(a) em breve', 'Fechar', { duration: 5000 });

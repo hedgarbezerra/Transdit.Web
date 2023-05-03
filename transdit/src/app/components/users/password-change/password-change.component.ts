@@ -2,10 +2,9 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { EMPTY, catchError } from 'rxjs';
 import { UserOperationResult } from 'src/app/classes/Users/UserOperationResult';
 import { PasswordReset, PasswordUpdate } from 'src/app/classes/Users/Users';
-import { HandleRequestError, getFormFromGroup, getQueryVariable } from 'src/app/helpers/HelperFunctions';
+import { getFormFromGroup, getQueryVariable } from 'src/app/helpers/HelperFunctions';
 import { RequiredIf, SameAs } from 'src/app/helpers/custom-validators/password-validator';
 import { UsersService } from 'src/app/services/users/users.service';
 
@@ -61,23 +60,15 @@ export class PasswordChangeComponent {
       var result =  this.userService.UpdatePassword(currentObj);
     }
 
-    result.pipe(catchError(err => {
-      var errorWithCode = HandleRequestError(err);
-      this.snackBar.open(errorWithCode[1], 'Fechar', { duration: 5000 });
-
-      return EMPTY;
-      }))
-    ?.subscribe((operationResult: UserOperationResult) =>{
+    result.subscribe((operationResult: UserOperationResult) =>{
       if(operationResult.successful){
         this.passwordResetForm.reset();
-        let message = operationResult.messages.join(' \n');
-        this.snackBar.open(message, 'Fechar', { duration: 5000, });
 
         if(this.IsRequestingRecovery)
           setTimeout(() => { this.router.navigate(['/login']) }, 5000);
       }
-      else
-        this.snackBar.open('Houve algum problema com inesperado, tente novamente em instantes', 'Fechar', { duration: 5000, })
+      let message = operationResult.messages.join(' \n');
+      this.snackBar.open(message, 'Fechar', { duration: 5000, })
     })
   }
 }

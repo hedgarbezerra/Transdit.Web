@@ -2,9 +2,8 @@ import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { EMPTY, catchError } from 'rxjs';
 import { UserOperationResult } from 'src/app/classes/Users/UserOperationResult';
-import { HandleRequestError, getFormFromGroup } from 'src/app/helpers/HelperFunctions';
+import { getFormFromGroup } from 'src/app/helpers/HelperFunctions';
 import { UsersService } from 'src/app/services/users/users.service';
 
 @Component({
@@ -27,13 +26,7 @@ export class RecoveryComponent {
     let email : string = this.email.value;
 
     this.userService.recoverPassword(email)
-    .pipe(catchError(err => {
-        let errAsResult = HandleRequestError(err);
-        this.snackBar.open(errAsResult[1], 'Fechar', { duration: 5000, });
-
-      return EMPTY;
-      }))
-    ?.subscribe((operationResult: UserOperationResult) =>{
+    .subscribe((operationResult: UserOperationResult) =>{
       if(operationResult.successful)
         this.recoveryForm.reset();
 

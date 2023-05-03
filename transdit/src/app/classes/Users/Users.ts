@@ -1,6 +1,9 @@
-export interface InputUser  {
+interface BaseUser{
   email: string
   password: string
+}
+
+export interface InputUser extends BaseUser {
   name: string
   username: string
   passwordConfirm: string
@@ -19,15 +22,11 @@ export interface OutputUser {
   isConfirmed: boolean
 }
 
-export interface Login{
-  email: string
-  password: string
+export interface Login extends BaseUser {
 }
 
-export interface PasswordReset{
-  email: string
+export interface PasswordReset extends BaseUser {
   token: string
-  password: string
   passwordConfirm: string
 }
 
@@ -35,4 +34,9 @@ export interface PasswordUpdate{
   password: string
   newPassword: string
   newPasswordConfirm: string
+}
+
+export interface ConfirmAccount {
+  email: string
+  token: string
 }

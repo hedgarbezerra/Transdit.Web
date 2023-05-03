@@ -18,9 +18,6 @@ export function HandleRequestError<T extends DefaultResponse<any>>(err : any): [
       let errAsResult = err.error as T;
       return [400, errAsResult.messages.join(' \n')];
     }
-    else if(err.status == 401){
-      return [401, 'Houve um erro com sua sessão, você será desconectado.']
-    }
     else if(err.status = 500){
       let errorMessage = err.error as string;
       if(typeof(errorMessage) == 'string')

@@ -11,6 +11,8 @@ import { SignupComponent } from './components/users/signup/signup.component';
 import { MainComponent } from './components/transcriptions/main/main.component';
 import { UserMainComponent } from './components/users/user-main/user-main.component';
 import { guards } from './services/users/authentication.service';
+import { UseinformationsComponent } from './components/main/useinformations/useinformations.component';
+import { UsetermsComponent } from './components/main/useterms/useterms.component';
 
 const routes: Routes = [
   {
@@ -77,6 +79,14 @@ const routes: Routes = [
   {
     path: 'confirmacao',
     component: ConfirmationComponent
+  },
+  {
+    path: 'termos-uso',
+    component: UsetermsComponent
+  },
+  {
+    path: 'informacoes-uso',
+    component: UseinformationsComponent
   }
 ];
 

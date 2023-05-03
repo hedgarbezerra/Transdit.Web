@@ -7,7 +7,7 @@
   <div class="row">
     <div class="col s12 l12 center-align">
       <mat-form-field appearance="fill" hintLabel="obrigatório">
-        <mat-label>E-mail</mat-label>
+        <mat-label>E-mail ou usuário</mat-label>
         <input matInput type="email" placeholder="email@valido.com.br" formControlName="email" required>
         <mat-error *ngIf="email.errors?.['required']">Email é obrigatório</mat-error>
         <mat-error *ngIf="email.errors?.['email']">Deve ser utilizado um e-mail válido</mat-error>

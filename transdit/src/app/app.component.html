@@ -1,4 +1,5 @@
 <app-navbar></app-navbar>
+<app-loading-spinner *ngIf="spinnerService.visibility | async"></app-loading-spinner>
 <main class="main container">
     <router-outlet></router-outlet>
 </main>

@@ -26,7 +26,10 @@ import { UseinformationsComponent } from './components/main/useinformations/usei
 import { UserMainComponent } from './components/users/user-main/user-main.component';
 import { TranscriptionItemComponent } from './components/transcriptions/transcription-item/transcription-item.component';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
-import { AuthInterceptor } from './helpers/AuthInterceptor';
+import { AuthInterceptor, UnauthenticatedInterceptor } from './helpers/AuthInterceptor';
+import { RequestLoaderInterceptor } from './helpers/RequestLoaderInterceptor';
+import { LoadingSpinnerComponent } from './components/main/loading-spinner/loading-spinner.component';
+import { ErrorHandlingHttpInterceptor } from './helpers/ErrorHandlingHttpInterceptor';
 
 @NgModule({
   declarations: [
@@ -46,7 +49,8 @@ import { AuthInterceptor } from './helpers/AuthInterceptor';
     UsetermsComponent,
     UseinformationsComponent,
     UserMainComponent,
-    TranscriptionItemComponent
+    TranscriptionItemComponent,
+    LoadingSpinnerComponent
   ],
   imports: [
     BrowserModule,
@@ -59,7 +63,10 @@ import { AuthInterceptor } from './helpers/AuthInterceptor';
     HttpClientModule
   ],
   providers: [{provide: MAT_DATE_LOCALE, useValue: 'pt-br'},
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
+    { provide: HTTP_INTERCEPTORS, useClass: UnauthenticatedInterceptor, multi: true},
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorHandlingHttpInterceptor, multi: true},
+    { provide: HTTP_INTERCEPTORS, useClass: RequestLoaderInterceptor, multi: true},
   ],
   bootstrap: [AppComponent]
 })

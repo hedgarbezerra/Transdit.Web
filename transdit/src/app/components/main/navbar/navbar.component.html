@@ -1,6 +1,6 @@
 <nav class="nav-main" *ngIf="isAuthenticated">
   <div class="nav-wrapper">
-    <a routerLink="/" class="brand-logo"><i class="material-icons">home</i>Início</a>
+    <a routerLink="/app" class="brand-logo"><i class="material-icons">home</i>Início</a>
     <ul class="right hide-on-med-and-down">
       <li [routerLinkActive]="'active'"><a routerLink="app/transcricoes"><i class="material-icons left">transcribe</i>Transcrições</a></li>
       <li [routerLinkActive]="'active'"><a routerLink="app/usuarios"><i class="material-icons right">manage_accounts</i>Perfil</a></li>

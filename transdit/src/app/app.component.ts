@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { LoadingSpinnerService } from './services/loading-spinner.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,5 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'transdit';
+  constructor(protected spinnerService: LoadingSpinnerService){}
 }
