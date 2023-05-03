@@ -113,7 +113,7 @@
         </mat-checkbox>
       </div>
       <div class="col s12 l4">
-        <button type="submit" mat-flat-button color="primary" class="right" [disabled]="newUserForm.invalid">
+        <button type="submit" mat-flat-button color="primary" class="right" [disabled]="newUserForm.invalid" [ngClass]="newUserForm.valid ? 'pulse' : ''">
           <mat-icon>add_circle</mat-icon>
           Cadastrar
         </button>

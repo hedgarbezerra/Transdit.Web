@@ -24,8 +24,11 @@ const routes: Routes = [
     path: 'app',
     canActivate:[guards.canActivateAuthenticated],
     canActivateChild: [guards.canActivateAuthenticatedChild],
-    component: MainComponent,
     children: [
+      {
+        path: '',
+        component: MainComponent
+      },
       {
         path: 'transcricoes',
         component: MainComponent,

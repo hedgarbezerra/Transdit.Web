@@ -2,11 +2,21 @@
   <div class="nav-wrapper">
     <a routerLink="/app" class="brand-logo"><i class="material-icons">home</i>Início</a>
     <ul class="right hide-on-med-and-down">
-      <li [routerLinkActive]="'active'"><a routerLink="app/transcricoes"><i class="material-icons left">transcribe</i>Transcrições</a></li>
-      <li [routerLinkActive]="'active'"><a routerLink="app/usuarios"><i class="material-icons right">manage_accounts</i>Perfil</a></li>
+      <li [routerLinkActive]="'active'"><a routerLink="/app/transcricoes"><i class="material-icons left">transcribe</i>Transcrições</a></li>
+      <li [routerLinkActive]="'active'"><a routerLink="/app/usuarios"><i class="material-icons right">manage_accounts</i>Perfil</a></li>
       <li><a class="clickable" (click)="logout()"><i class="material-icons">logout</i></a></li>
     </ul>
+    <ul class="right hide-on-large-only">
+      <li><button [matMenuTriggerFor]="menu" mat-icon-button>
+        <mat-icon>menu</mat-icon>
+      </button></li>
+    </ul>
   </div>
+  <mat-menu #menu="matMenu">
+    <a class="mat-mdc-menu-item mat-mdc-focus-indicator mdc-list-item" routerLink="/app/transcricoes"><i class="material-icons left">transcribe</i>Transcrições</a>
+    <a class="mat-mdc-menu-item mat-mdc-focus-indicator mdc-list-item" routerLink="/app/usuarios"><i class="material-icons left">manage_accounts</i>Perfil</a>
+    <a class="mat-mdc-menu-item mat-mdc-focus-indicator mdc-list-item" (click)="logout()"><i class="material-icons left">logout</i>Sair</a>
+</mat-menu>
 </nav>
 
 <nav class="nav-main" *ngIf="!isAuthenticated">
