@@ -1,4 +1,4 @@
 export const environment = {
-  apiUrl: 'https://localhost:44322/api',
+  apiUrl: 'https://transdit-api.azurewebsites.net/api',
   apiVersion: '1.0'
 };
