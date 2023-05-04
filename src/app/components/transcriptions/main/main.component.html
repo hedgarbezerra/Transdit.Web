@@ -1,5 +1,12 @@
 <div class="row">
   <div class="col s12">
+    <button mat-fab color="primary" aria-label="button with a transcrition add icon" class="right" (click)="addTranscription()">
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+</div>
+<div class="row">
+  <div class="col s12">
     <div *ngIf="transcriptions.length > 0">
       <div *ngFor="let transcription of transcriptions">
         <app-transcription-item [transcription]="transcription"></app-transcription-item>
@@ -14,11 +21,7 @@
 
 <div class="row">
   <div class="col s12">
-    <mat-paginator class="center" [length]="100"
-      [pageSize]="10"
-      [pageSizeOptions]="[5, 10, 20, 50]"
-      aria-label="Selecione uma página">
-    </mat-paginator>
+    <app-paginator-ptbr [pagination]="pagination"></app-paginator-ptbr>
   </div>
 </div>
 

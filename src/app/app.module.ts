@@ -30,6 +30,10 @@ import { AuthInterceptor, UnauthenticatedInterceptor } from './helpers/AuthInter
 import { RequestLoaderInterceptor } from './helpers/RequestLoaderInterceptor';
 import { LoadingSpinnerComponent } from './components/main/loading-spinner/loading-spinner.component';
 import { ErrorHandlingHttpInterceptor } from './helpers/ErrorHandlingHttpInterceptor';
+import { PaginatorPtbrComponent, PaginatorPtbrService } from './components/main/paginator-ptbr/paginator-ptbr.component';
+import { MatPaginatorIntl } from '@angular/material/paginator';
+import { TranscriptionItemExportconfirmComponent } from './components/transcriptions/transcription-item-exportconfirm/transcription-item-exportconfirm.component';
+import { MomentsFromNowPipe } from './helpers/diretives/MomentsFromNow.pipe';
 
 @NgModule({
   declarations: [
@@ -50,7 +54,11 @@ import { ErrorHandlingHttpInterceptor } from './helpers/ErrorHandlingHttpInterce
     UseinformationsComponent,
     UserMainComponent,
     TranscriptionItemComponent,
-    LoadingSpinnerComponent
+    LoadingSpinnerComponent,
+    PaginatorPtbrComponent,
+    TranscriptionItemExportconfirmComponent,
+    
+    MomentsFromNowPipe
   ],
   imports: [
     BrowserModule,
@@ -67,6 +75,7 @@ import { ErrorHandlingHttpInterceptor } from './helpers/ErrorHandlingHttpInterce
     { provide: HTTP_INTERCEPTORS, useClass: UnauthenticatedInterceptor, multi: true},
     { provide: HTTP_INTERCEPTORS, useClass: ErrorHandlingHttpInterceptor, multi: true},
     { provide: HTTP_INTERCEPTORS, useClass: RequestLoaderInterceptor, multi: true},
+    {provide: MatPaginatorIntl, useClass: PaginatorPtbrService},
   ],
   bootstrap: [AppComponent]
 })
