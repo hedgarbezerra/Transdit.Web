@@ -13,6 +13,7 @@ import { UserMainComponent } from './components/users/user-main/user-main.compon
 import { guards } from './services/users/authentication.service';
 import { UseinformationsComponent } from './components/main/useinformations/useinformations.component';
 import { UsetermsComponent } from './components/main/useterms/useterms.component';
+import { NotFoundComponent } from './components/main/not-found/not-found.component';
 
 const routes: Routes = [
   {
@@ -31,7 +32,6 @@ const routes: Routes = [
       },
       {
         path: 'transcricoes',
-        component: MainComponent,
         children:[
           {
             path: 'transcrever',
@@ -90,6 +90,10 @@ const routes: Routes = [
   {
     path: 'informacoes-uso',
     component: UseinformationsComponent
+  },
+  {
+    path: '**',
+    component: NotFoundComponent
   }
 ];
 

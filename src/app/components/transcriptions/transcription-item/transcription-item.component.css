@@ -4,7 +4,7 @@
 }
 
 .transcription-item{
-  margin: 2em;
+  margin: 2em 0 2em 0;
   border-width: 1px;
   border-color: var(--main-bg-color);
 }
