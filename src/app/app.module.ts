@@ -34,6 +34,8 @@ import { PaginatorPtbrComponent, PaginatorPtbrService } from './components/main/
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { TranscriptionItemExportconfirmComponent } from './components/transcriptions/transcription-item-exportconfirm/transcription-item-exportconfirm.component';
 import { MomentsFromNowPipe } from './helpers/diretives/MomentsFromNow.pipe';
+import { TranscriptionItemTranscribeconfirmComponent } from './components/transcriptions/transcription-item-transcribeconfirm/transcription-item-transcribeconfirm.component';
+
 
 @NgModule({
   declarations: [
@@ -57,8 +59,10 @@ import { MomentsFromNowPipe } from './helpers/diretives/MomentsFromNow.pipe';
     LoadingSpinnerComponent,
     PaginatorPtbrComponent,
     TranscriptionItemExportconfirmComponent,
-    
-    MomentsFromNowPipe
+    TranscriptionItemTranscribeconfirmComponent,
+
+
+    MomentsFromNowPipe,
   ],
   imports: [
     BrowserModule,

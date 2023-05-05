@@ -5,6 +5,9 @@ import { TranscriptionItem } from 'src/app/classes/Transcriptions/TranscriptionI
 import { base64ToArrayBuffer,  saveData } from 'src/app/helpers/HelperFunctions';
 import { ExportService } from 'src/app/services/transcriptions/export.service';
 import { TranscriptionItemExportconfirmComponent } from '../transcription-item-exportconfirm/transcription-item-exportconfirm.component';
+import * as moment from 'moment';
+import { TranscriptionsService } from 'src/app/services/transcriptions/transcriptions.service';
+import { TranscriptionItemTranscribeconfirmComponent } from '../transcription-item-transcribeconfirm/transcription-item-transcribeconfirm.component';
 
 @Component({
   selector: 'app-transcription-item',
@@ -12,12 +15,17 @@ import { TranscriptionItemExportconfirmComponent } from '../transcription-item-e
   styleUrls: ['./transcription-item.component.css']
 })
 export class TranscriptionItemComponent {
-  constructor(private exportService: ExportService, private dialog: MatDialog ){}
+  constructor(private exportService: ExportService, private dialog: MatDialog, private transcriber: TranscriptionsService ){}
 
   @Input()
   transcription!: TranscriptionItem;
   showResult = false;
 
+  get AllowFromStorage(): boolean{
+    let now = moment();
+    let transcriptionDate = moment(this.transcription.date);
+    return now.diff(transcriptionDate, 'days') <= 3
+  }
 
   exportPdf(){
     let diag = this.dialog.open(TranscriptionItemExportconfirmComponent);
@@ -64,5 +72,19 @@ export class TranscriptionItemComponent {
         })
       }
     });
+  }
+
+  TranscreverStorage(){
+    let diag = this.dialog.open(TranscriptionItemTranscribeconfirmComponent);
+    diag.afterClosed()
+    .subscribe(res =>{
+      if(res){
+        this.transcriber.TranscribeFromStorage(this.transcription.storageFileName, this.transcription.language)
+        .subscribe(res =>{
+            //TODO: abrir tela de transcrição(transcribe direto na última página com resultado)
+        })
+      }
+    })
+
   }
 }

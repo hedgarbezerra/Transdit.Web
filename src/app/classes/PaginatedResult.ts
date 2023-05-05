@@ -9,3 +9,11 @@ export interface PaginatedResult<T> {
   hasPreviousPage: boolean
   hasNextPage: boolean
 }
+
+export interface Pagination
+{
+  size: number,
+  index: number,
+  count: number,
+  searchTerm: string
+}

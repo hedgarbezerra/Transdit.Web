@@ -1,27 +1,34 @@
 <div class="row">
-  <div class="col s12">
-    <button mat-fab color="primary" aria-label="button with a transcrition add icon" class="right" (click)="addTranscription()">
+  <div class="col s10">
+    <mat-form-field appearance="outline">
+      <mat-label>Pesquisar</mat-label>
+      <input matInput placeholder="nome da transcrição" [formControl]="searchTerm" >
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+  </div>
+  <div class="col s2">
+    <button mat-fab color="primary" matTooltip="Nova transcrição"  aria-label="button with a transcrition add icon" class="right" (click)="addTranscription()">
       <mat-icon>add</mat-icon>
     </button>
   </div>
 </div>
-<div class="row">
-  <div class="col s12">
-    <div *ngIf="transcriptions.length > 0">
-      <div *ngFor="let transcription of transcriptions">
-        <app-transcription-item [transcription]="transcription"></app-transcription-item>
-      </div>
-    </div>
 
-    <div *ngIf="transcriptions.length <= 0">
-      <h2>Nada para ver aqui...</h2>
+<div class="row">
+  <div class="center-align" *ngIf="transcriptions.length <= 0">
+    <h2>Nada para ver aqui...</h2>
+  </div>
+
+  <div *ngIf="transcriptions.length > 0">
+    <div *ngFor="let transcription of transcriptions">
+      <app-transcription-item [transcription]="transcription"></app-transcription-item>
     </div>
   </div>
 </div>
 
+
 <div class="row">
   <div class="col s12">
-    <app-paginator-ptbr [pagination]="pagination"></app-paginator-ptbr>
+    <app-paginator-ptbr [pagination]="pagination" (paginated)="handlePageEvent($event)"></app-paginator-ptbr>
   </div>
 </div>
 

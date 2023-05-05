@@ -1,6 +1,7 @@
-import { Component, Injectable, Input, NgModule } from '@angular/core';
-import { MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginator';
+import { Component, EventEmitter, Injectable, Input, NgModule, Output } from '@angular/core';
+import { MatPaginatorIntl, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { Subject } from 'rxjs';
+import { Pagination } from 'src/app/classes/PaginatedResult';
 
 @Component({
   selector: 'app-paginator-ptbr',
@@ -9,12 +10,16 @@ import { Subject } from 'rxjs';
 })
 export class PaginatorPtbrComponent {
   @Input()
-  pagination = {
-    pageSize: 10,
-    pageIndex: 0,
-    totalCount: 0
+  pagination! : Pagination;
+  @Output()
+  paginated: EventEmitter<PageEvent> = new EventEmitter();
+
+  //Pass the evento to parent
+  handlePageEvent(event : PageEvent){
+    this.paginated.emit(event)
   }
 }
+
 
 @Injectable({
   providedIn: 'root'

@@ -61,3 +61,7 @@ nav ul li.active {
 .mat-mdc-slide-toggle .mdc-switch:focus{
 background-color: transparent !important;
 }
+
+.mat-mdc-paginator-container{
+  justify-content: center !important;
+}

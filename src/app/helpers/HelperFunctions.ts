@@ -1,4 +1,3 @@
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { DefaultResponse } from './../classes/DefaultResponse';
 import { FormControl, FormGroup } from "@angular/forms";
 
@@ -16,6 +15,9 @@ export function getQueryVariable(variable: string) : string | null
 
 export function HandleRequestError<T extends DefaultResponse<any>>(err : any): [number, string] {
     if(err.status == 400){
+      if(typeof(err.error) === 'string')
+        return [400, err.error];
+
       let errAsResult = err.error as T;
       return [400, errAsResult.messages.join(' \n')];
     }
@@ -59,7 +61,7 @@ export function saveData(data: Uint8Array, type: string, fileName: string) {
   a.href = url;
   a.download = fileName;
   a.click();
-  
+
   window.URL.revokeObjectURL(url);
   document.body.removeChild(a);
 }
