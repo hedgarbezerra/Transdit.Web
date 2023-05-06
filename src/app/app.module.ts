@@ -36,6 +36,8 @@ import { TranscriptionItemExportconfirmComponent } from './components/transcript
 import { MomentsFromNowPipe } from './helpers/diretives/MomentsFromNow.pipe';
 import { TranscriptionItemTranscribeconfirmComponent } from './components/transcriptions/transcription-item-transcribeconfirm/transcription-item-transcribeconfirm.component';
 import { NotFoundComponent } from './components/main/not-found/not-found.component';
+import { NewDictionaryComponent } from './components/custom-dictionary/new-dictionary/new-dictionary.component';
+import { RemoveWordConfirmComponent } from './components/custom-dictionary/remove-word-confirm/remove-word-confirm.component';
 
 
 @NgModule({
@@ -61,10 +63,11 @@ import { NotFoundComponent } from './components/main/not-found/not-found.compone
     PaginatorPtbrComponent,
     TranscriptionItemExportconfirmComponent,
     TranscriptionItemTranscribeconfirmComponent,
-
+    NotFoundComponent,
 
     MomentsFromNowPipe,
-        NotFoundComponent,
+      NewDictionaryComponent,
+      RemoveWordConfirmComponent
   ],
   imports: [
     BrowserModule,

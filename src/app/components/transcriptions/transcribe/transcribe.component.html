@@ -1,33 +1,167 @@
-<mat-stepper [linear]="false" #stepper>
-  <mat-step >
-    <form >
-      <ng-template matStepLabel>Selecione sua mídia</ng-template>
-      <mat-form-field appearance="fill">
-        <mat-label>Name</mat-label>
-        <input matInput placeholder="Last name, First name" formControlName="firstCtrl" required>
-      </mat-form-field>
-      <div>
-        <button mat-button matStepperNext>Next</button>
+<mat-stepper [linear]="true" #stepper >
+  <mat-step label="Selecione sua mídia">
+    <form [formGroup]="firstPageFormG">
+      <div class="row">
+        <div class="col s12">
+          <mat-form-field hintLabel="opcional" appearance="fill">
+            <mat-label>Link de vídeo(Youtube)</mat-label>
+            <input matInput #urlField formControlName="youtubeUrl" autocomplete="url" type="url">
+            <mat-error *ngIf="url.errors?.['required']"></mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col s12">
+          <input type="file" name="upload" id="uploadFile">
+        </div>
+      </div>
+
+      <div class="row">
+        <button type="button" mat-button matStepperNext [disabled]="firstPageFormG.invalid">Próximo</button>
       </div>
     </form>
   </mat-step>
 
   <mat-step label="Parametros da transcrição">
-    <form >
-      <mat-form-field appearance="fill">
-        <mat-label>Address</mat-label>
-        <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY" required>
-      </mat-form-field>
+    <form [formGroup]="secondPageFormG" >
+      <div class="row">
+        <div class="col s12 l6">
+          <mat-form-field hintLabel="obrigatório" appearance="fill">
+            <mat-label>Nome da transcrição</mat-label>
+            <input matInput #name required formControlName="name">
+            <mat-error *ngIf="nameForm.errors?.['required']">O seu nome é obrigatório</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="col s12 l6">
+          <mat-form-field appearance="fill" hintLabel="obrigatório">
+            <mat-label>Idioma principal</mat-label>
+            <mat-select formControlName="language">
+              <mat-option>Nenhum</mat-option>
+              <mat-optgroup *ngFor="let language of languages" [label]="language.key" aria-selected="true">
+                <mat-option *ngFor="let langCode of language.codes" [value]="langCode">
+                  {{langCode}}
+                </mat-option>
+              </mat-optgroup>
+            </mat-select>
+            <mat-error *ngIf="languageForm.errors?.['required']">Idioma da mídia é obrigatório</mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col s12 l6">
+          <mat-form-field hintLabel="obrigatório" appearance="fill">
+            <mat-label>Quantas pessoas estão falando?</mat-label>
+            <input matInput #speakers required formControlName="speakers" type="number">
+            <mat-error *ngIf="speakersForm.errors?.['required']">É necessário indicar quantas pessoas tem na conversa</mat-error>
+            <mat-error *ngIf="speakersForm.errors?.['min']">Pelo menos uma pessoa deve estar presente na conversa</mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col s12 l12">
+          <mat-slide-toggle color="primary" [(ngModel)]="showHints" [ngModelOptions]="{standalone: true}" (change)="ShowHintChanged()">
+            Utilizar dicionários customizado?
+          </mat-slide-toggle>
+        </div>
+      </div>
+      <div *ngIf="showHints">
+        <div class="row">
+          <div class="col s12 l6">
+            <mat-form-field appearance="fill">
+              <mat-label>Selecione o dicionário desejado</mat-label>
+              <mat-select formControlName="customDictionaryId" required>
+                <mat-option>Nenhum</mat-option>
+                <mat-option *ngFor="let dict of dictionaries" [value]="dict.id">
+                  {{dict.name}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="customDictionaryIdForm.hasError('required')">Selecione um dicionário</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col s12 l6">
+            <mat-label>Impacto do dicionário(0 - 20)</mat-label>
+            <mat-slider min="0" max="20" step="1" discrete>
+            <input matSliderThumb formControlName="hintsImpact" id="matSliderHints">
+            </mat-slider>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col s12">
+            <mat-form-field class="example-chip-list" appearance="fill" >
+              <mat-label>Frases ou Palavras</mat-label>
+              <mat-chip-grid #chipGrid aria-label="Digite novas palavras" [disabled]="!selectedDictionary">
+                <mat-chip-row *ngFor="let word of selectedDictionary?.words"
+                              (removed)="removeWord(word)"
+                              [editable]="false"
+                              [aria-description]="'press enter to edit ' + word.word">
+                    {{word.word}}
+                  <button matChipRemove [attr.aria-label]="'remove ' + word.word">
+                    <mat-icon>cancel</mat-icon>
+                  </button>
+                </mat-chip-row>
+                <input placeholder="Nova frase"
+                       [matChipInputFor]="chipGrid"
+                       [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                       [matChipInputAddOnBlur]="true"
+                       (matChipInputTokenEnd)="addWord($event)"/>
+              </mat-chip-grid>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col s12 l12">
+          <mat-slide-toggle color="primary"[(ngModel)]="showAdditionalLanguages" [ngModelOptions]="{standalone: true}" (change)="showAdditionalLanguagesChanged()">
+            Utilizar idiomas adicionais?</mat-slide-toggle>
+        </div>
+      </div>
+      <div class="row" *ngIf="showAdditionalLanguages">
+        <div class="col s12 l6">
+          <mat-form-field appearance="fill">
+          <mat-label>Idiomas adicionais</mat-label>
+          <mat-select formControlName="additionalLanguages" multiple>
+            <mat-select-trigger>
+              {{additionalLanguagesForm.value?.[0] || ''}}
+              <span *ngIf="(additionalLanguagesForm.value?.length || 0) > 1">
+                (+{{(additionalLanguagesForm.value?.length || 0) - 1}} {{additionalLanguagesForm.value?.length === 2 ? 'outro' : 'outros'}})
+              </span>
+            </mat-select-trigger>
+            <mat-optgroup *ngFor="let language of languages" [label]="language.key" aria-selected="true">
+              <mat-option *ngFor="let langCode of language.codes" [value]="langCode">
+                {{langCode}}
+              </mat-option>
+            </mat-optgroup>
+          </mat-select>
+          <mat-error *ngIf="additionalLanguagesForm.errors?.['required']">Quando habilitados, idiomas adicionais são obrigatórios</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col s12 l6"></div>
+      </div>
+
+
+      <div class="row">
+        <div class="col s12">
+          <mat-slide-toggle color="primary" formControlName="save" matTooltip="Apenas salvará se o plano permitir">Salvar resultado da transcrição?</mat-slide-toggle>
+        </div>
+      </div>
       <div>
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext>Next</button>
+        <button type="button" mat-button (click)="Teste()"> teste</button>
+        <button type="button" mat-button matStepperPrevious>Anterior</button>
+        <button type="button" mat-button matStepperNext [disabled]="secondPageFormG.invalid">Próximo</button>
       </div>
     </form>
   </mat-step>
 
   <mat-step>
     <ng-template matStepLabel>Resultados</ng-template>
-    <p>You are now done.</p>
+    <p>Tratar transcription result adicionar botões de exportação também.</p>
+
     <div>
       <button mat-button matStepperPrevious>Back</button>
       <button mat-button (click)="stepper.reset()">Reset</button>

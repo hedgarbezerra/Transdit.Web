@@ -32,3 +32,15 @@ export function RequiredIf(condition: boolean): ValidatorFn{
     return condition && !control.value ? { requiredif : { value: control.value} } : null;
   }
 }
+
+export function OneOf(formNames: string[]): ValidatorFn{
+  return (control: AbstractControl): ValidationErrors | null => {
+    var result = true;
+    for (let i = 0; i < formNames.length; i++) {
+      let formName = formNames[i];
+      let formValue = control.get(formName)?.value
+      result = formValue !== null && formValue != undefined && formValue != ''
+    }
+    return result ? { oneOf : { value: control.value} } : null;
+  }
+}

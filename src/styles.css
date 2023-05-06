@@ -65,3 +65,12 @@ background-color: transparent !important;
 .mat-mdc-paginator-container{
   justify-content: center !important;
 }
+
+.mat-horizontal-stepper-header-container {
+  margin-bottom: 3% !important;
+}
+
+input[type=range] {
+  margin: revert;
+  position: absolute !important;
+}
