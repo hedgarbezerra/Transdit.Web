@@ -11,3 +11,5 @@
 .transcription-item-result{
   min-height: 150px;
 }
+
+button:focus { background-color: revert !important}

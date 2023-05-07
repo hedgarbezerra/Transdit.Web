@@ -20,7 +20,7 @@
     <button mat-button matTooltip="Exportar resultado em PDF" (click)="exportPdf()">PDF</button>
     <button mat-button matTooltip="Exportar resultado em TXT" (click)="exportTxt()">TXT</button>
     <button mat-button matTooltip="Exportar resultado em DOCX" (click)="exportDocx()">DOCX</button>
-    <button [disabled]="!AllowFromStorage" mat-button color="primary" matTooltip="Transcrever utilizando arquivo salvo"
+    <button [disabled]="!AllowFromStorage" mat-stroked-button color="primary" matTooltip="Transcrever utilizando arquivo salvo"
     (click)="TranscreverStorage()">Transcrever</button>
   </mat-card-actions>
 </mat-card>

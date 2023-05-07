@@ -24,3 +24,4 @@ input[type="file"]{
 .mat-horizontal-stepper-header-container {
   margin-bottom: 5% !important;
 }
+button:focus { background-color: transparent !important;}

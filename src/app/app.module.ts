@@ -38,6 +38,7 @@ import { TranscriptionItemTranscribeconfirmComponent } from './components/transc
 import { NotFoundComponent } from './components/main/not-found/not-found.component';
 import { NewDictionaryComponent } from './components/custom-dictionary/new-dictionary/new-dictionary.component';
 import { RemoveWordConfirmComponent } from './components/custom-dictionary/remove-word-confirm/remove-word-confirm.component';
+import { NgxFileDropModule } from 'ngx-file-drop';
 
 
 @NgModule({
@@ -77,7 +78,8 @@ import { RemoveWordConfirmComponent } from './components/custom-dictionary/remov
     FormsModule,
     ReactiveFormsModule,
     MaterialExportModule,
-    HttpClientModule
+    HttpClientModule,
+    NgxFileDropModule
   ],
   providers: [{provide: MAT_DATE_LOCALE, useValue: 'pt-br'},
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},

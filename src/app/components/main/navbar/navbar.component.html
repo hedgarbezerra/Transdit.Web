@@ -16,7 +16,7 @@
     <a class="mat-mdc-menu-item mat-mdc-focus-indicator mdc-list-item" routerLink="/app/transcricoes"><i class="material-icons left">transcribe</i>Transcrições</a>
     <a class="mat-mdc-menu-item mat-mdc-focus-indicator mdc-list-item" routerLink="/app/usuarios"><i class="material-icons left">manage_accounts</i>Perfil</a>
     <a class="mat-mdc-menu-item mat-mdc-focus-indicator mdc-list-item" (click)="logout()"><i class="material-icons left">logout</i>Sair</a>
-</mat-menu>
+  </mat-menu>
 </nav>
 
 <nav class="nav-main" *ngIf="!isAuthenticated">
@@ -26,5 +26,14 @@
       <li [routerLinkActive]="'active'"><a routerLink="cadastro"><i class="material-icons left">person_add</i>Cadastro</a></li>
       <li [routerLinkActive]="'active'"><a routerLink="login"><i class="material-icons right">login</i>Login</a></li>
     </ul>
+    <ul class="right hide-on-large-only">
+      <li><button [matMenuTriggerFor]="menu" mat-icon-button>
+        <mat-icon>menu</mat-icon>
+      </button></li>
+    </ul>
   </div>
+  <mat-menu #menu="matMenu">
+    <a class="mat-mdc-menu-item mat-mdc-focus-indicator mdc-list-item" routerLink="cadastro"><i class="material-icons left">person_add</i>Cadastro</a>
+    <a class="mat-mdc-menu-item mat-mdc-focus-indicator mdc-list-item" routerLink="login"><i class="material-icons left">login</i>Login</a>
+  </mat-menu>
 </nav>

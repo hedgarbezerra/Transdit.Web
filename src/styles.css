@@ -17,10 +17,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   cursor: pointer;
 }
 
-button:focus {
-  background-color: var(--main-bg-color) !important;
-  color: whitesmoke !important;
-}
 .mat-mdc-text-field-wrapper:not(.mdc-text-field--outlined) .mat-mdc-form-field-infix
 {
   padding-top: 15px !important;
@@ -74,3 +70,8 @@ input[type=range] {
   margin: revert;
   position: absolute !important;
 }
+
+button:focus {
+  background-color: transparent !important;
+}
+

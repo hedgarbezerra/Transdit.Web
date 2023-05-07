@@ -26,7 +26,13 @@ export class ConfirmationComponent {
     return getQueryVariable("name");
   }
 
+  get shouldConfirm(): boolean{
+    return this.token != null && this.user != null;
+  }
+
   ngOnInit(): void {
+    if(!this.shouldConfirm)
+      return;
 
     let confirmation = { email: this.user ?? '', token: this.token ?? '' } as ConfirmAccount;
     this.userService.ConfirmAccount(confirmation)
