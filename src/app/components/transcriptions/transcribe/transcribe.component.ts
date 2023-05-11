@@ -318,6 +318,16 @@ export class TranscribeComponent {
 
       input.youtubeUrl = this.url.value;
       input.fileName = this.uploadedFileName;
+      if(this.showHints && this.selectedDictionary){
+        let hints = this.selectedDictionary?.words.map(w => w.word);
+        input.hints = hints;
+        input.hintsImpact = this.hintsImpactForm.value;
+      }
+
+      if(this.showAdditionalLanguages){
+        input.additionalLanguages = this.additionalLanguagesForm.value
+      }
+
       if(this.url.valid){
         var result = this.transcriber.TranscribeFromYoutube(input);
       }

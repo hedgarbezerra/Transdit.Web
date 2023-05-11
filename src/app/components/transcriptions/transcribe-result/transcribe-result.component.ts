@@ -16,11 +16,14 @@ constructor(private exportService: ExportService, private dialog: MatDialog){}
 
   @Input()
   result!: TranscriptionResult;
+
   @Input()
   name!: string;
 
-  playMedia(event: any){
 
+  playMedia(event: any){
+    console.log('Fazer algo com esse evento')
+    console.log(event);
   }
 
 
@@ -30,7 +33,7 @@ constructor(private exportService: ExportService, private dialog: MatDialog){}
     diag.afterClosed()
     .subscribe((res: any) => {
       if(res){
-        this.exportService.ExportTranscriptionResult('', ExportFormat.PDF)
+        this.exportService.ExportTranscriptionResultObj(this.result, ExportFormat.PDF)
         .subscribe(res => {
             var bytes = base64ToArrayBuffer(res);
             saveData(bytes, 'application/pdf', `${this.name}.pdf`);
@@ -46,7 +49,7 @@ constructor(private exportService: ExportService, private dialog: MatDialog){}
     diag.afterClosed()
     .subscribe((res: any) => {
       if(res){
-        this.exportService.ExportTranscriptionResult('', ExportFormat.TXT)
+        this.exportService.ExportTranscriptionResultObj(this.result, ExportFormat.TXT)
         .subscribe(res => {
           var bytes = base64ToArrayBuffer(res);
           saveData(bytes, 'text/plain',  `${this.name}.txt`);
@@ -62,7 +65,7 @@ constructor(private exportService: ExportService, private dialog: MatDialog){}
     diag.afterClosed()
     .subscribe((res: any) => {
       if(res){
-        this.exportService.ExportTranscriptionResult('', ExportFormat.DOCX)
+        this.exportService.ExportTranscriptionResultObj(this.result, ExportFormat.DOCX)
         .subscribe(res =>{
           var bytes = base64ToArrayBuffer(res);
           saveData(bytes, 'application/vnd.openxmlformats',  `${this.name}.docx`);

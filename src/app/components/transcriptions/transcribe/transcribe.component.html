@@ -1,4 +1,4 @@
-<mat-stepper [linear]="false" #stepper >
+<mat-stepper [linear]="true" #stepper >
   <mat-step label="Selecione sua mídia" [stepControl]="firstPageFormG" matStepperIcon="attach_file_add" state="attach_file_add">
     <form [formGroup]="firstPageFormG">
       <div class="row">
@@ -194,11 +194,12 @@
     <ng-template matStepLabel>Resultados</ng-template>
     <app-transcribe-result [result]="transcriptionResults" [name]="nameForm.value"></app-transcribe-result>
     <div class="row">
-      <div class="col s12">
-
+      <div class="col s6">
         <button type="button" mat-raised-button mat-dialog-close color="warn" class="left" (click)="stepper.reset()">
           Finalizar
         </button>
+      </div>
+      <div class="col s6">
         <button mat-raised-button color="primary" class="right" (click)="stepper.reset()">Fazer nova transcrição</button>
       </div>
     </div>

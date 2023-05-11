@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { TranscriptionPlayEvent } from 'src/app/classes/Transcriptions/TranscriptionPlayEvent';
 import { TranscriptionResultItem } from 'src/app/classes/Transcriptions/TranscriptionResult';
 
 @Component({
@@ -12,9 +13,9 @@ export class TranscribeResultItemComponent {
   item!: TranscriptionResultItem;
 
   @Output('played')
-  playEvent : EventEmitter<any> = new EventEmitter();
+  playEvent : EventEmitter<TranscriptionPlayEvent> = new EventEmitter();
 
-  playButton(){
-    this.playEvent.emit({});
+  emitTime(){
+    this.playEvent.emit(new TranscriptionPlayEvent(this.item.startTimeSeconds, this.item.endTimeSeconds))
   }
 }

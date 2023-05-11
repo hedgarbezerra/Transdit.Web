@@ -1,8 +1,9 @@
 <div>
-    <button mat-icon-button extended  aria-label="Tocar este momento">
-        <mat-icon>play</mat-icon>
-        utilizar duration
-        
-        {{item.startTimeSeconds }} - {{item.endTimeSeconds}}
+  <p>
+    <button mat-stroked-button extended color="primary" (click)="emitTime()">
+      <mat-icon>play_arrow</mat-icon>
+      <span class="transcription-time"> {{item.startTimeSeconds | playtime }} - {{item.endTimeSeconds | playtime}}</span>
     </button>
+  </p>
+    <span class="transcription-phrase">({{item.precision | percentage}}) - {{item.text}}</span>
 </div>

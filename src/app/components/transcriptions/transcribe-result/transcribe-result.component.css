@@ -4,6 +4,7 @@
   outline-color: var(--main-bg-color);
   word-wrap: break-word;
   min-height: 60vh;
+  padding: .5cm;
 }
 
 .transcription-container{

@@ -33,7 +33,7 @@ import { ErrorHandlingHttpInterceptor } from './helpers/ErrorHandlingHttpInterce
 import { PaginatorPtbrComponent, PaginatorPtbrService } from './components/main/paginator-ptbr/paginator-ptbr.component';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { TranscriptionItemExportconfirmComponent } from './components/transcriptions/transcription-item-exportconfirm/transcription-item-exportconfirm.component';
-import { MomentsFromNowPipe } from './helpers/diretives/MomentsFromNow.pipe';
+import { MomentsFromNowPipe, PercentagePipe, SecondsToPlaytimePipe } from './helpers/diretives/MomentsFromNow.pipe';
 import { TranscriptionItemTranscribeconfirmComponent } from './components/transcriptions/transcription-item-transcribeconfirm/transcription-item-transcribeconfirm.component';
 import { NotFoundComponent } from './components/main/not-found/not-found.component';
 import { NewDictionaryComponent } from './components/custom-dictionary/new-dictionary/new-dictionary.component';
@@ -67,13 +67,15 @@ import { TranscribeResultItemComponent } from './components/transcriptions/trans
     TranscriptionItemExportconfirmComponent,
     TranscriptionItemTranscribeconfirmComponent,
     NotFoundComponent,
+    NewDictionaryComponent,
+    RemoveWordConfirmComponent,
+    TranscribeConfirmComponent,
+    TranscribeResultComponent,
+    TranscribeResultItemComponent,
 
     MomentsFromNowPipe,
-      NewDictionaryComponent,
-      RemoveWordConfirmComponent,
-      TranscribeConfirmComponent,
-      TranscribeResultComponent,
-      TranscribeResultItemComponent
+    SecondsToPlaytimePipe,
+    PercentagePipe
   ],
   imports: [
     BrowserModule,

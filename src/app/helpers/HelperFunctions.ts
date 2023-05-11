@@ -65,3 +65,11 @@ export function saveData(data: Uint8Array, type: string, fileName: string) {
   window.URL.revokeObjectURL(url);
   document.body.removeChild(a);
 }
+
+export function truncateDecimals(value: number, digits: number) {
+  var multiplier = Math.pow(10, digits),
+      adjustedNum = value * multiplier,
+      truncatedNum = Math[adjustedNum < 0 ? 'ceil' : 'floor'](adjustedNum);
+
+  return truncatedNum / multiplier;
+};
