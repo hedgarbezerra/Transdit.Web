@@ -75,3 +75,7 @@ button:focus {
   background-color: transparent !important;
 }
 
+.mat-mdc-fab.mat-primary, .mat-mdc-mini-fab.mat-primary button:focus{
+  background-color: var(--main-bg-color) !important;
+  color: whitesmoke !important;
+}

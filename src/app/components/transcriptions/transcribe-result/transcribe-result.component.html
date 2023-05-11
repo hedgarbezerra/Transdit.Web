@@ -1,0 +1,24 @@
+<div class="transcription-main">
+  <h2>Resultados</h2>
+  <h3>
+    <strong>
+
+  </strong>
+  </h3>
+  <div class="transcription-container">
+    <div class="transcription-header">
+      <div class="row">
+        <div class="col s12">
+          <p>Exportar resultado em:</p>
+          <button mat-button matTooltip="Exportar resultado em PDF" (click)="exportPdf()">PDF</button>
+          <button mat-button matTooltip="Exportar resultado em TXT" (click)="exportTxt()">TXT</button>
+          <button mat-button matTooltip="Exportar resultado em DOCX" (click)="exportDocx()">DOCX</button>
+        </div>
+      </div>
+    </div>
+    <div class="transcription-content" contenteditable="true">
+      <app-transcribe-result-item *ngFor="let item of result.data" [item]="item" (played)="playMedia($event)"></app-transcribe-result-item>
+    </div>
+  </div>
+</div>
+

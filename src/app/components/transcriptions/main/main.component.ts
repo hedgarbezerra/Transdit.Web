@@ -33,7 +33,7 @@ constructor(private dialog: MatDialog, private transcriber: TranscriptionsServic
 
 
   addTranscription(){
-    const dialogRef = this.dialog.open(TranscribeComponent, { enterAnimationDuration: '200'});
+    const dialogRef = this.dialog.open(TranscribeComponent, { enterAnimationDuration: '200', width: '90vw', height: '90vh', disableClose: true});
 
     dialogRef.afterClosed().subscribe(result => {
       if(result)

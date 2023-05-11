@@ -1,10 +1,10 @@
 export interface Dictionary {
-  id: number
   name: string
   description: string
 }
 
 export interface OutDictionary extends Dictionary{
+  id: number
   date: string
   words: DictionaryWord[]
 }

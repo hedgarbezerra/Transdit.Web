@@ -1,17 +1,16 @@
-import { catchError, retry } from 'rxjs/operators';
+import {  retry } from 'rxjs/operators';
 import { Component } from '@angular/core';
 import * as moment from 'moment';
 import { Plan } from 'src/app/classes/Plans/Plans';
 import { MatDialog } from '@angular/material/dialog';
 import { UsetermsComponent } from '../../main/useterms/useterms.component';
-import {FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@angular/forms';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 import { MinuminAgeValidator, SameAs } from 'src/app/helpers/custom-validators/password-validator';
-import { HandleRequestError, getFormFromGroup } from 'src/app/helpers/HelperFunctions';
+import { getFormFromGroup } from 'src/app/helpers/HelperFunctions';
 import { UsersService } from 'src/app/services/users/users.service';
 import { InputUser } from 'src/app/classes/Users/Users';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { EMPTY } from 'rxjs';
 import { UserOperationResult } from 'src/app/classes/Users/UserOperationResult';
 
 @Component({

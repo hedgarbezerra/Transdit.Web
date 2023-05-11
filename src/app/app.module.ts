@@ -38,7 +38,9 @@ import { TranscriptionItemTranscribeconfirmComponent } from './components/transc
 import { NotFoundComponent } from './components/main/not-found/not-found.component';
 import { NewDictionaryComponent } from './components/custom-dictionary/new-dictionary/new-dictionary.component';
 import { RemoveWordConfirmComponent } from './components/custom-dictionary/remove-word-confirm/remove-word-confirm.component';
-import { NgxFileDropModule } from 'ngx-file-drop';
+import { TranscribeConfirmComponent } from './components/transcriptions/transcribe-confirm/transcribe-confirm.component';
+import { TranscribeResultComponent } from './components/transcriptions/transcribe-result/transcribe-result.component';
+import { TranscribeResultItemComponent } from './components/transcriptions/transcribe-result-item/transcribe-result-item.component';
 
 
 @NgModule({
@@ -68,7 +70,10 @@ import { NgxFileDropModule } from 'ngx-file-drop';
 
     MomentsFromNowPipe,
       NewDictionaryComponent,
-      RemoveWordConfirmComponent
+      RemoveWordConfirmComponent,
+      TranscribeConfirmComponent,
+      TranscribeResultComponent,
+      TranscribeResultItemComponent
   ],
   imports: [
     BrowserModule,
@@ -79,7 +84,6 @@ import { NgxFileDropModule } from 'ngx-file-drop';
     ReactiveFormsModule,
     MaterialExportModule,
     HttpClientModule,
-    NgxFileDropModule
   ],
   providers: [{provide: MAT_DATE_LOCALE, useValue: 'pt-br'},
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},

@@ -1,38 +1,45 @@
-<mat-stepper [linear]="true" #stepper >
-  <mat-step label="Selecione sua mídia">
+<mat-stepper [linear]="false" #stepper >
+  <mat-step label="Selecione sua mídia" [stepControl]="firstPageFormG" matStepperIcon="attach_file_add" state="attach_file_add">
     <form [formGroup]="firstPageFormG">
       <div class="row">
         <div class="col s12">
           <mat-form-field hintLabel="opcional" appearance="fill">
             <mat-label>Link de vídeo(Youtube)</mat-label>
-            <input matInput #urlField formControlName="youtubeUrl" autocomplete="url" type="url">
+            <input matInput #urlField formControlName="youtubeUrl" autocomplete="url" type="url" (change)="urlChanged($event)">
             <mat-error *ngIf="url.errors?.['required']"></mat-error>
+            <mat-error *ngIf="url.errors?.['pattern']">Não é uma URL válida</mat-error>
           </mat-form-field>
         </div>
+      </div>
+      <div class="row">
         <div class="col s12">
-          <ngx-file-drop dropZoneLabel="Drop files here" (onFileDrop)="dropped($event)"
-    (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
-        <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
-          Optional custom content that replaces the the entire default content.
-          <button type="button" (click)="openFileSelector()">Browse Files</button>
-        </ng-template>
-    </ngx-file-drop>
+          <h2 class="center">ou </h2>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s12">
+          <label for="files" class="drop-container">
+            <span class="drop-title">Arraste e solte arquivo aqui</span>
+            ou
+            <input id="files" name="files" formControlName="file" type="file" [accept]="acceptFiles"
+             (change)="fileChanged($event)">
+            <span class="file-error" *ngIf="file.errors?.['permittedExtension']">Tipo de arquivo não permitido</span>
+          </label>
         </div>
       </div>
 
       <div class="row">
-        <div class="col s12">
-          <input type="file" name="upload" id="uploadFile">
-        </div>
-      </div>
-
-      <div class="row">
-        <button type="button" mat-button matStepperNext [disabled]="firstPageFormG.invalid">Próximo</button>
+        <button type="button" mat-raised-button mat-dialog-close color="warn" class="left" (click)="stepper.reset()">
+          Cancelar
+        </button>
+        <button type="button" mat-raised-button color="primary" class="right" [disabled]="firstPageFormG.invalid" (click)="HandleFirstStep(stepper)">
+          Próximo
+        </button>
       </div>
     </form>
   </mat-step>
 
-  <mat-step label="Parametros da transcrição">
+  <mat-step label="Parametros da transcrição" [stepControl]="secondPageFormG" matStepperIcon="add_notes" state="add_notes">
     <form [formGroup]="secondPageFormG" >
       <div class="row">
         <div class="col s12 l6">
@@ -71,7 +78,7 @@
       </div>
 
       <div class="row">
-        <div class="col s12 l12">
+        <div class="col s12">
           <mat-slide-toggle color="primary" [(ngModel)]="showHints" [ngModelOptions]="{standalone: true}" (change)="ShowHintChanged()">
             Utilizar dicionários customizado?
           </mat-slide-toggle>
@@ -79,26 +86,36 @@
       </div>
       <div *ngIf="showHints">
         <div class="row">
-          <div class="col s12 l6">
+          <div class="col s12 l8">
             <mat-form-field appearance="fill">
               <mat-label>Selecione o dicionário desejado</mat-label>
               <mat-select formControlName="customDictionaryId" required>
                 <mat-option>Nenhum</mat-option>
                 <mat-option *ngFor="let dict of dictionaries" [value]="dict.id">
                   {{dict.name}}
-                  <button matSuffix mat-icon-button aria-label="Apagar dicionário" matTooltip="Apagar dicionário {{dict.name}}" (click)="removeDictionary(dict)">
-                    <mat-icon>close</mat-icon>
-                  </button>
                 </mat-option>
               </mat-select>
               <mat-error *ngIf="customDictionaryIdForm.hasError('required')">Selecione um dicionário</mat-error>
-              <button matSuffix mat-icon-button color="primary" aria-label="Novo dicionário" matTooltip="Adicionar novo dicionário" (click)="addDictionary()">
-                <mat-icon>add</mat-icon>
-              </button>
             </mat-form-field>
           </div>
+          <div class="col s6 l1">
+            <button type="button" matSuffix mat-fab color="primary" aria-label="Novo dicionário" matTooltip="Adicionar novo dicionário" (click)="addDictionary()">
+              <mat-icon>add</mat-icon>
+            </button>
+          </div>
+          <div class="col s6 l1">
+            <button type="button" mat-fab color="warn" aria-label="Apagar dicionário" matTooltip="Apagar dicionário {{selectedDictionary?.name ?? ''}}" (click)="removeDictionary(selectedDictionary)">
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </div>
+        </div>
+        <div class="row">
           <div class="col s12 l6">
-            <mat-label>Impacto do dicionário(0 - 20)</mat-label>
+            <mat-label>Impacto do dicionário
+            </mat-label>
+            <p>
+              <small>(Quanto maior o número, maior o impacto que o dicionário terá na transcrição, entre 0 - 20)</small>
+            </p>
             <mat-slider min="0" max="20" step="1" discrete>
             <input matSliderThumb formControlName="hintsImpact" id="matSliderHints">
             </mat-slider>
@@ -113,9 +130,9 @@
                 <mat-chip-row *ngFor="let word of selectedDictionary?.words"
                               (removed)="removeWord(word)"
                               [editable]="false"
-                              [aria-description]="'press enter to edit ' + word.word">
+                              [aria-description]="'Aperte ENTER para editar ' + word.word">
                     {{word.word}}
-                  <button matChipRemove [attr.aria-label]="'remove ' + word.word">
+                  <button type="button" matChipRemove [attr.aria-label]="'remover ' + word.word">
                     <mat-icon>cancel</mat-icon>
                   </button>
                 </mat-chip-row>
@@ -166,20 +183,24 @@
         </div>
       </div>
       <div>
-        <button type="button" mat-button (click)="Teste()"> teste</button>
-        <button type="button" mat-button matStepperPrevious>Anterior</button>
-        <button type="button" mat-button matStepperNext [disabled]="secondPageFormG.invalid">Próximo</button>
+        <button type="button" mat-raised-button matStepperPrevious>Anterior</button>
+        <button type="button" mat-raised-button color="primary" class="right pulse"
+         [disabled]="secondPageFormG.invalid" (click)="Transcribe(stepper)">Transcrever</button>
       </div>
     </form>
   </mat-step>
 
-  <mat-step>
+  <mat-step matStepperIcon="transcribe" state="transcribe">
     <ng-template matStepLabel>Resultados</ng-template>
-    <p>Tratar transcription result adicionar botões de exportação também.</p>
+    <app-transcribe-result [result]="transcriptionResults" [name]="nameForm.value"></app-transcribe-result>
+    <div class="row">
+      <div class="col s12">
 
-    <div>
-      <button mat-button matStepperPrevious>Back</button>
-      <button mat-button (click)="stepper.reset()">Reset</button>
+        <button type="button" mat-raised-button mat-dialog-close color="warn" class="left" (click)="stepper.reset()">
+          Finalizar
+        </button>
+        <button mat-raised-button color="primary" class="right" (click)="stepper.reset()">Fazer nova transcrição</button>
+      </div>
     </div>
   </mat-step>
 </mat-stepper>

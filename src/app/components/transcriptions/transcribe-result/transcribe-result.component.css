@@ -1,0 +1,20 @@
+
+.transcription-content {
+  background-color: whitesmoke;
+  outline-color: var(--main-bg-color);
+  word-wrap: break-word;
+  min-height: 60vh;
+}
+
+.transcription-container{
+  border-width: 2px;
+  border-radius: 4px;
+  border-color: var(--main-bg-color);
+}
+
+.transcription-header{
+
+}
+.transcription-main{
+  margin-bottom: 3vh;
+}

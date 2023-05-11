@@ -14,7 +14,7 @@ export class PaginatorPtbrComponent {
   @Output()
   paginated: EventEmitter<PageEvent> = new EventEmitter();
 
-  //Pass the evento to parent
+  //Pass the event to parent
   handlePageEvent(event : PageEvent){
     this.paginated.emit(event)
   }

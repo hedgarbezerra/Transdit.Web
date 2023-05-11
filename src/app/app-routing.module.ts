@@ -14,6 +14,7 @@ import { guards } from './services/users/authentication.service';
 import { UseinformationsComponent } from './components/main/useinformations/useinformations.component';
 import { UsetermsComponent } from './components/main/useterms/useterms.component';
 import { NotFoundComponent } from './components/main/not-found/not-found.component';
+import { NewDictionaryComponent } from './components/custom-dictionary/new-dictionary/new-dictionary.component';
 
 const routes: Routes = [
   {
@@ -33,20 +34,24 @@ const routes: Routes = [
       {
         path: 'transcricoes',
         children:[
+
+          {
+            path: '',
+            component: MainComponent
+          },
           {
             path: 'transcrever',
             component: TranscribeComponent
-          },
-          {
-            path: 'listar',
-            component: MainComponent
           }
         ]
       },
       {
         path: 'usuarios',
-        component: UserMainComponent,
-        children:[
+        children: [
+          {
+            path: '',
+            component: UserMainComponent
+          },
           {
             path: 'email',
             component: EmailChangeComponent
@@ -60,6 +65,10 @@ const routes: Routes = [
             component: PlanChangeComponent
           }
         ]
+      },
+      {
+        path: 'dicionarios',
+        component: NewDictionaryComponent
       }
     ]
   },

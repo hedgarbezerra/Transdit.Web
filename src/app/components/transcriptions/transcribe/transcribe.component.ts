@@ -1,23 +1,33 @@
 import { Component } from '@angular/core';
-import {COMMA, D, ENTER} from '@angular/cdk/keycodes';
+import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { Dictionary, DictionaryWord, OutDictionary } from 'src/app/classes/Dictionaries/Dictionaries';
 import { TranscriptionInput } from 'src/app/classes/Transcriptions/InputTranscription';
 import { TranscriptionResult } from 'src/app/classes/Transcriptions/TranscriptionResult';
 import { getFormFromGroup } from 'src/app/helpers/HelperFunctions';
-import { OneOf, RequiredIf } from 'src/app/helpers/custom-validators/password-validator';
+import { OneOf, RequiredIf, PermitedFiles, atLeastOne, GroupOneOf } from 'src/app/helpers/custom-validators/password-validator';
 import { DictionariesService } from 'src/app/services/customDictionary/dictionary-service.service';
 import { TranscriptionsService } from 'src/app/services/transcriptions/transcriptions.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NewDictionaryComponent } from 'src/app/components/custom-dictionary/new-dictionary/new-dictionary.component';
-import { NgxFileDropEntry, FileSystemFileEntry, FileSystemDirectoryEntry } from 'ngx-file-drop';
+import { Observable } from 'rxjs';
+import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
+import { MatStepper } from '@angular/material/stepper';
+import { TranscribeConfirmComponent } from '../transcribe-confirm/transcribe-confirm.component';
+import { RemoveWordConfirmComponent } from '../../custom-dictionary/remove-word-confirm/remove-word-confirm.component';
 
 @Component({
   selector: 'app-transcribe',
   templateUrl: './transcribe.component.html',
-  styleUrls: ['./transcribe.component.css']
+  styleUrls: ['./transcribe.component.css'],
+  providers: [
+    {
+      provide: STEPPER_GLOBAL_OPTIONS,
+      useValue: {displayDefaultIndicatorType: false, showError: false},
+    },
+  ],
 })
 
 export class TranscribeComponent {
@@ -25,27 +35,28 @@ export class TranscribeComponent {
     private diag: MatDialog, private snackBar: MatSnackBar){}
 
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
-  public files: NgxFileDropEntry[] = [];
 
   languages!: any[];
-  permitedFiles!: string[];
   dictionaries!: OutDictionary[];
+  permitedFiles!: string[];
+  acceptFiles!: string;
 
   toTranscribe!: TranscriptionInput;
-  uploadedFileName! : string;
   transcriptionResults!: TranscriptionResult;
 
   showHints = false;
   showAdditionalLanguages = false;
 
+  selectedFile!: File;
+  uploadedFileName!: string;
   get selectedDictionary(): OutDictionary | undefined {
     return this.dictionaries.find(d => d.id == this.customDictionaryIdForm.value)
   }
 
   firstPageFormG = new FormGroup({
-    youtubeUrl: new FormControl('', [OneOf(['youtubeUrl', 'file',])]),
-    file: new FormControl(File, [OneOf(['youtubeUrl', 'file']), ]),
-  });
+    youtubeUrl: new FormControl('', [Validators.pattern(/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/)]),
+    file: new FormControl('', []),
+  }, [GroupOneOf(Validators.required, [])]);
 
   get url() : FormControl{
     return getFormFromGroup('youtubeUrl', this.firstPageFormG);
@@ -111,10 +122,45 @@ export class TranscribeComponent {
     this.additionalLanguagesForm.updateValueAndValidity();
   }
 
-  Teste(){
-    let input = this.secondPageFormG.value as unknown as TranscriptionInput;
-    console.log(input);
-    console.log(this.secondPageFormG.value)
+  urlChanged(event: any){
+    if(this.url.value && this.url.valid){
+      this.file.disable();
+    }
+    else{
+      this.file.enable();
+    }
+    this.file.reset();
+  }
+
+  fileChanged(event: any){
+    if(this.file.value && this.file.valid){
+      this.url.disable();
+      this.handleUpdatedFile(event);
+    }
+    else{
+      this.url.enable();
+    }
+    this.url.reset();
+  }
+
+  handleUpdatedFile(event: any){
+    if(!event)
+      return;
+
+    let files = (event.target as HTMLInputElement)?.files;
+    let file = !files ? null: files[0];
+    if(!file) return;
+
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    this.selectedFile = file;
+  }
+
+  streamUploadFile(file: File) {
+    let formData = new FormData();
+    formData.append('file', file);
+
+    return this.transcriber.UploadFile(formData);
   }
 
   LoadLanguageCodes(){
@@ -130,7 +176,8 @@ export class TranscribeComponent {
   LoadPermittedFiles(){
     this.transcriber.PermitedFileExtensions()
     .subscribe(res =>{
-      this.permitedFiles = res;
+      this.acceptFiles = res.join(',');
+      this.file.addValidators(PermitedFiles(res));
     })
   }
 
@@ -141,14 +188,15 @@ export class TranscribeComponent {
     })
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.LoadLanguageCodes();
     this.LoadPermittedFiles();
     this.LoadCustomDictionaries();
   }
 
+
   addDictionary(): void{
-    let diag = this.diag.open(NewDictionaryComponent);
+    let diag = this.diag.open(NewDictionaryComponent, { height: '50vh', width: '50vw'});
 
     diag.afterClosed()
     .subscribe(result =>{
@@ -156,114 +204,132 @@ export class TranscribeComponent {
         return;
 
       let dict = result as Dictionary;
+      if(!dict)
+        return;
+
       this.dictionaryService.CreateDictionary(dict)
       .subscribe(create =>{
-        this.snackBar.open(`${dict.name} foi criado, atualizando campo...`, 'Fechar').afterOpened()
-        .subscribe(() => this.LoadCustomDictionaries());
+        let id = create as number;
+        let words = result.words.map((w: string) => <DictionaryWord>{ word: w}) as DictionaryWord[] ;
+        this.dictionaryService.CreateWords(id, words)
+        .subscribe(res =>{
+          this.snackBar.open(`${dict.name} foi criado, atualizando campo...`, 'Fechar')
+          .afterOpened()
+          .subscribe(() => this.LoadCustomDictionaries());
+        })
       })
-      // if(result)
-      //   this.LoadCustomDictionaries();
     })
   }
 
-  removeDictionary(dict: OutDictionary): void{
-    let diag = this.diag.open(NewDictionaryComponent);
+  removeDictionary(dict: OutDictionary | undefined): void{
+    if(!dict)
+      return;
 
+    let diag = this.diag.open(RemoveWordConfirmComponent);
+    diag.componentInstance.dict = dict;
     diag.afterClosed()
     .subscribe(result =>{
       if(!result)
         return;
 
       let index = this.dictionaries.indexOf(dict);
-
       if (index >= 0){
         this.dictionaries.splice(index, 1);
         this.dictionaryService.DeleteDictionary(dict.id)
         .subscribe(res =>{
-          this.snackBar.open(`${dict.name} foi apagado definitivamente.`, 'Fechar');
+          this.snackBar.open(`O dicionário customizado '${dict.name}' foi apagado definitivamente.`, 'Fechar');
         });
-    }
-      // if(result)
-      //   this.LoadCustomDictionaries();
+      }
     })
 
   }
 
   addWord(event: MatChipInputEvent): void {
-    let value = (event.value || '').trim();
+    if(!this.selectedDictionary)
+      return;
 
-    // Add our fruit
+    let value = (event.value || '').trim();
+    var dictId = this.selectedDictionary.id;
+
     if (value) {
-      console.log(value)
-      //this.fruits.push({name: value});
+      this.dictionaryService.CreateWord(dictId, value)
+      .subscribe(res =>{
+        this.snackBar.open(`Palavra '${value}' adicionada ao dicionário.`, 'Fechar',{ duration: 5000});
+        this.dictionaryService.GetWords(dictId)
+        .subscribe(res => {
+          let updatedWords = res as DictionaryWord[];
+          if(this.selectedDictionary)
+           this.selectedDictionary.words = updatedWords
+
+        })
+      })
     }
 
-    // Clear the input value
     event.chipInput!.clear();
   }
+
   removeWord(word: DictionaryWord): void {
-    console.log(word)
+    if(!this.selectedDictionary)
+      return;
+
+    let index = this.selectedDictionary.words.indexOf(word);
+    this.selectedDictionary.words.splice(index, 1);
+
+    this.dictionaryService.DeleteWord(this.selectedDictionary.id, word.id)
+    .subscribe(res =>{
+      this.snackBar.open(`Palavra '${word.word}' removida do dicionário.`, 'Fechar',{ duration: 5000});
+    })
   }
 
-  public dropped(files: NgxFileDropEntry[]) {
-    this.files = files;
-    for (const droppedFile of files) {
 
-      // Is it a file?
-      if (droppedFile.fileEntry.isFile) {
-        const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
-        fileEntry.file((file: File) => {
+  HandleFirstStep(stepper: MatStepper){
+    if(this.url.value && this.url.valid){
+      stepper.next();
+    }
+    else{
+      this.streamUploadFile(this.selectedFile)
+      .subscribe(res =>{
+        if(res.isConverted)
+          this.uploadedFileName = res.convertedFileName;
+        else
+          this.uploadedFileName = res.fileName;
 
-          // Here you can access the real file
-          console.log(droppedFile.relativePath, file);
-
-          /**
-          // You could upload it like this:
-          const formData = new FormData()
-          formData.append('logo', file, relativePath)
-
-          // Headers
-          const headers = new HttpHeaders({
-            'security-token': 'mytoken'
-          })
-
-          this.http.post('https://mybackend.com/api/upload/sanitize-and-save-logo', formData, { headers: headers, responseType: 'blob' })
-          .subscribe(data => {
-            // Sanitized logo returned from backend
-          })
-          **/
-
-        });
-      } else {
-        // It was a directory (empty directories are added, otherwise only files)
-        const fileEntry = droppedFile.fileEntry as FileSystemDirectoryEntry;
-        console.log(droppedFile.relativePath, fileEntry);
-      }
+        this.snackBar.open('Mídia enviada com sucesso.', 'OK', {duration: 5000});
+        stepper.next();
+      });
     }
   }
 
-  public fileOver(event: any){
-    console.log(event);
-  }
-
-  public fileLeave(event: any){
-    console.log(event);
-  }
-
-  Transcribe(){
+  Transcribe(stepper: MatStepper){
     if(this.secondPageFormG.invalid)
       return;
 
-    let input = this.secondPageFormG.value as unknown as TranscriptionInput;
-    var result;
-    if(this.url.valid){
+    let confirmation = this.diag.open(TranscribeConfirmComponent);
+    confirmation.afterClosed()
+    .subscribe(confirmed =>{
+      if(!confirmed)
+        return;
+
+      let input = this.secondPageFormG.value as unknown as TranscriptionInput;
+      if(!input){
+        this.snackBar.open('Houve um problema ao transcrever com as configurações selecionadas.', 'OK', {duration: 5000});
+        return;
+      }
+
       input.youtubeUrl = this.url.value;
-      result = this.transcriber.TranscribeFromYoutube(input);
-    }
-    else{
-      input.fileName = this.file.value;
-      result = this.transcriber.Transcribe(input);
-    }
+      input.fileName = this.uploadedFileName;
+      if(this.url.valid){
+        var result = this.transcriber.TranscribeFromYoutube(input);
+      }
+      else{
+        var result = this.transcriber.Transcribe(input);
+      }
+
+      result.subscribe(result =>{
+        this.transcriptionResults = result;
+        stepper.next();
+      })
+    })
   }
 
 }

@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { OutDictionary } from 'src/app/classes/Dictionaries/Dictionaries';
 
 @Component({
   selector: 'app-remove-word-confirm',
@@ -6,5 +7,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./remove-word-confirm.component.css']
 })
 export class RemoveWordConfirmComponent {
+
+  @Input()
+  dict!: OutDictionary;
 
 }

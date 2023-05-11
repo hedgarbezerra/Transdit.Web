@@ -24,6 +24,10 @@ export class TranscriptionsService {
     return this.httpclient.get<TranscriptionResult>(`${environment.apiUrl}/transcribe/storage/${fileName}?lang=${lang}`)
   }
 
+  UploadFile(form: FormData): Observable<any>{
+    return this.httpclient.post<any>(`${environment.apiUrl}/transcribe/upload`, form)
+  }
+
   PaginateTranscriptions(pagination: Pagination): Observable<TranscriptionPaginatedResult>{
     let params = new HttpParams()
       .set('index', pagination.index)

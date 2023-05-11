@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { OutDictionary, Dictionary } from 'src/app/classes/Dictionaries/Dictionaries';
+import { OutDictionary, Dictionary, DictionaryWord } from 'src/app/classes/Dictionaries/Dictionaries';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -34,6 +34,9 @@ export class DictionariesService {
     let wordObj = { word: phrase };
 
     return this.httpClient.post(`${environment.apiUrl}/dictionaries/${idDictionary}/words`, wordObj);
+  }
+  CreateWords(idDictionary: number, words: DictionaryWord[]){
+    return this.httpClient.post(`${environment.apiUrl}/dictionaries/${idDictionary}/words/multiple`, words);
   }
   DeleteWord(idDictionary: number, idWord: number){
     return this.httpClient.delete(`${environment.apiUrl}/dictionaries/${idDictionary}/words/${idWord}`, );
