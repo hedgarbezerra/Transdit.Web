@@ -71,7 +71,7 @@ input[type=range] {
   position: absolute !important;
 }
 
-button:focus {
+.mdc-icon-button:focus {
   background-color: transparent !important;
 }
 
