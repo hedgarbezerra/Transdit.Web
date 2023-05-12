@@ -1,6 +1,6 @@
 <div>
   <p>
-    <button mat-stroked-button extended color="primary" (click)="emitTime()">
+    <button mat-stroked-button extended color="primary" (click)="emitTime()" disabled>
       <mat-icon>play_arrow</mat-icon>
       <span class="transcription-time"> {{item.startTimeSeconds | playtime }} - {{item.endTimeSeconds | playtime}}</span>
     </button>

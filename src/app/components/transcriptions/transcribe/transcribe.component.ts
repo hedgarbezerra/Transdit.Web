@@ -43,9 +43,10 @@ export class TranscribeComponent {
 
   toTranscribe!: TranscriptionInput;
   transcriptionResults!: TranscriptionResult;
-
+  
   showHints = false;
   showAdditionalLanguages = false;
+  isCompleted = false;
 
   selectedFile!: File;
   uploadedFileName!: string;
@@ -351,6 +352,7 @@ export class TranscribeComponent {
 
       result.subscribe(result =>{
         this.transcriptionResults = result;
+        this.isCompleted = true;
         stepper.next();
       })
     })
@@ -358,6 +360,7 @@ export class TranscribeComponent {
 
   newTranscription(stepper: MatStepper){
     this.transcriptionResults = <TranscriptionResult>{};
+    this.isCompleted = false;
     stepper.reset()
   }
 
