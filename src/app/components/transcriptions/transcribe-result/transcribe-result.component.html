@@ -5,15 +5,14 @@
       <div class="row">
         <div class="col s12">
           <p>Exportar resultado em:</p>
-          <button mat-raised-button matTooltip="Exportar resultado em PDF" (click)="exportPdf()">PDF</button>
-          <button mat-raised-button matTooltip="Exportar resultado em TXT" (click)="exportTxt()">TXT</button>
-          <button mat-raised-button matTooltip="Exportar resultado em DOCX" (click)="exportDocx()">DOCX</button>
+          <button mat-raised-button matTooltip="Exportar resultado em PDF" [disabled]="!getContent()" (click)="exportPdf()">PDF</button>
+          <button mat-raised-button matTooltip="Exportar resultado em TXT" [disabled]="!getContent()" (click)="exportTxt()">TXT</button>
+          <button mat-raised-button matTooltip="Exportar resultado em DOCX" [disabled]="!getContent()" (click)="exportDocx()">DOCX</button>
         </div>
       </div>
     </div>
-    <div class="transcription-content" contenteditable="true">
+    <div class="transcription-content">
       <app-transcribe-result-item *ngFor="let item of result?.data" [item]="item" (played)="playMedia($event)"></app-transcribe-result-item>
     </div>
   </div>
 </div>
-

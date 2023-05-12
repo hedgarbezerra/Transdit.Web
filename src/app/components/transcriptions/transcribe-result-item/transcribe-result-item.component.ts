@@ -12,10 +12,23 @@ export class TranscribeResultItemComponent {
   @Input()
   item!: TranscriptionResultItem;
 
+  @Input()
+  hasVideo: boolean = false;
+  
   @Output('played')
   playEvent : EventEmitter<TranscriptionPlayEvent> = new EventEmitter();
 
   emitTime(){
     this.playEvent.emit(new TranscriptionPlayEvent(this.item.startTimeSeconds, this.item.endTimeSeconds))
+  }
+
+  get precisionColor(){
+    let precision = this.item.precision * 100;
+    if(precision <=40)
+      return '#f44336';
+    else if(precision < 70)
+      return '#f9c300';
+    else
+      return 'green';
   }
 }

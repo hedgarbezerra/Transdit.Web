@@ -6,6 +6,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { MaterialExportModule } from './helpers/material.module';
 
+import {VgCoreModule} from '@videogular/ngx-videogular/core';
+import {VgControlsModule} from '@videogular/ngx-videogular/controls';
+import {VgOverlayPlayModule} from '@videogular/ngx-videogular/overlay-play';
+import {VgBufferingModule} from '@videogular/ngx-videogular/buffering';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -86,6 +91,10 @@ import { TranscribeResultItemComponent } from './components/transcriptions/trans
     ReactiveFormsModule,
     MaterialExportModule,
     HttpClientModule,
+    VgCoreModule,
+    VgControlsModule,
+    VgOverlayPlayModule,
+    VgBufferingModule
   ],
   providers: [{provide: MAT_DATE_LOCALE, useValue: 'pt-br'},
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},

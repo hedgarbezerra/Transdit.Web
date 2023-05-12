@@ -1,7 +1,8 @@
 
 .transcription-content {
   background-color: whitesmoke;
-  outline-color: var(--main-bg-color);
+  border: 2px solid var(--main-bg-color);
+  border-radius: 4px;
   word-wrap: break-word;
   min-height: 60vh;
   padding: .5cm;
@@ -13,9 +14,7 @@
   border-color: var(--main-bg-color);
 }
 
-.transcription-header{
-
-}
 .transcription-main{
+  padding: .5cm;
   margin-bottom: 3vh;
 }

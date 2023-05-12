@@ -8,6 +8,7 @@ import { TranscriptionItemExportconfirmComponent } from '../transcription-item-e
 import * as moment from 'moment';
 import { TranscriptionsService } from 'src/app/services/transcriptions/transcriptions.service';
 import { TranscriptionItemTranscribeconfirmComponent } from '../transcription-item-transcribeconfirm/transcription-item-transcribeconfirm.component';
+import { TranscribeResultComponent } from '../transcribe-result/transcribe-result.component';
 
 @Component({
   selector: 'app-transcription-item',
@@ -81,7 +82,9 @@ export class TranscriptionItemComponent {
       if(res){
         this.transcriber.TranscribeFromStorage(this.transcription.storageFileName, this.transcription.language)
         .subscribe(res =>{
-            //TODO: abrir tela de transcrição(transcribe direto na última página com resultado)
+          let transcriptioDiag = this.dialog.open(TranscribeResultComponent, { enterAnimationDuration: '200', width: '90vw', height: '90vh', disableClose: true});
+          transcriptioDiag.componentInstance.result = res;
+          transcriptioDiag.componentInstance.name = this.transcription.name;
         })
       }
     })

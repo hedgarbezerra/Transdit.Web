@@ -12,7 +12,7 @@ import { TranscriptionsService } from 'src/app/services/transcriptions/transcrip
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NewDictionaryComponent } from 'src/app/components/custom-dictionary/new-dictionary/new-dictionary.component';
-import { Observable } from 'rxjs';
+import { Observable, map, startWith, tap } from 'rxjs';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { MatStepper } from '@angular/material/stepper';
 import { TranscribeConfirmComponent } from '../transcribe-confirm/transcribe-confirm.component';
@@ -49,6 +49,9 @@ export class TranscribeComponent {
 
   selectedFile!: File;
   uploadedFileName!: string;
+  uploadedIsConverted!: boolean;
+  filteredMainLanguage!: Observable<any[]>;
+
   get selectedDictionary(): OutDictionary | undefined {
     return this.dictionaries.find(d => d.id == this.customDictionaryIdForm.value)
   }
@@ -69,7 +72,7 @@ export class TranscribeComponent {
     name: new FormControl('', [Validators.required]),
     language: new FormControl('pt-BR', [Validators.required]),
     speakers: new FormControl(1, [Validators.required, Validators.min(1)]),
-    save: new FormControl(false, [Validators.required]),
+    save: new FormControl(true, [Validators.required]),
     customDictionaryId: new FormControl(0, []),
     hintsImpact: new FormControl(0, []),
     additionalLanguages: new FormControl([], []),
@@ -170,6 +173,11 @@ export class TranscribeComponent {
           key: k,
           codes: v
         }))
+
+        this.filteredMainLanguage = this.languageForm.valueChanges.pipe(
+          startWith(''),
+          map(value => this.filter(value || ''))
+        );
     })
   }
 
@@ -188,12 +196,18 @@ export class TranscribeComponent {
     })
   }
 
+  filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.languages?.filter(option => option.key.toLowerCase().includes(filterValue)
+    || option.codes.some((code: string) =>code.toLowerCase().includes(filterValue)));
+  }
+
   ngOnInit() {
     this.LoadLanguageCodes();
     this.LoadPermittedFiles();
     this.LoadCustomDictionaries();
   }
-
 
   addDictionary(): void{
     let diag = this.diag.open(NewDictionaryComponent, { height: '50vh', width: '50vw'});
@@ -289,6 +303,7 @@ export class TranscribeComponent {
     else{
       this.streamUploadFile(this.selectedFile)
       .subscribe(res =>{
+        this.uploadedIsConverted = res.isConverted;
         if(res.isConverted)
           this.uploadedFileName = res.convertedFileName;
         else
@@ -316,16 +331,15 @@ export class TranscribeComponent {
         return;
       }
 
-      input.youtubeUrl = this.url.value;
-      input.fileName = this.uploadedFileName;
+      input.youtubeUrl = this.url.value ?? '';
+      input.fileName = this.uploadedFileName ?? '';
+      input.additionalLanguages = this.additionalLanguagesForm.value ?? [];
+      input.isConverted = this.uploadedIsConverted;
+
       if(this.showHints && this.selectedDictionary){
-        let hints = this.selectedDictionary?.words.map(w => w.word);
+        let hints = this.selectedDictionary?.words.map(w => w.word) ?? [];
         input.hints = hints;
         input.hintsImpact = this.hintsImpactForm.value;
-      }
-
-      if(this.showAdditionalLanguages){
-        input.additionalLanguages = this.additionalLanguagesForm.value
       }
 
       if(this.url.valid){
@@ -340,6 +354,11 @@ export class TranscribeComponent {
         stepper.next();
       })
     })
+  }
+
+  newTranscription(stepper: MatStepper){
+    this.transcriptionResults = <TranscriptionResult>{};
+    stepper.reset()
   }
 
 }

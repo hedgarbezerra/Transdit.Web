@@ -1,5 +1,5 @@
 <mat-stepper [linear]="true" #stepper >
-  <mat-step label="Selecione sua mídia" [stepControl]="firstPageFormG" matStepperIcon="attach_file_add" state="attach_file_add">
+  <mat-step label="Selecione sua mídia" [stepControl]="firstPageFormG" editable="true" matStepperIcon="attach_file_add" state="attach_file_add">
     <form [formGroup]="firstPageFormG">
       <div class="row">
         <div class="col s12">
@@ -53,14 +53,16 @@
         <div class="col s12 l6">
           <mat-form-field appearance="fill" hintLabel="obrigatório">
             <mat-label>Idioma principal</mat-label>
-            <mat-select formControlName="language">
+            <mat-autocomplete #auto aria-multiselectable="true">
               <mat-option>Nenhum</mat-option>
-              <mat-optgroup *ngFor="let language of languages" [label]="language.key" aria-selected="true">
+              <mat-optgroup *ngFor="let language of filteredMainLanguage| async" [label]="language.key" aria-selected="true">
                 <mat-option *ngFor="let langCode of language.codes" [value]="langCode">
                   {{langCode}}
                 </mat-option>
               </mat-optgroup>
-            </mat-select>
+            </mat-autocomplete>
+            <input type="text" placeholder="Selecione o idioma principal" aria-label="Idioma" matInput
+              formControlName="language" [matAutocomplete]="auto">
             <mat-error *ngIf="languageForm.errors?.['required']">Idioma da mídia é obrigatório</mat-error>
           </mat-form-field>
         </div>
@@ -200,7 +202,7 @@
         </button>
       </div>
       <div class="col s6">
-        <button mat-raised-button color="primary" class="right" (click)="stepper.reset()">Fazer nova transcrição</button>
+        <button mat-raised-button color="primary" class="right" (click)="newTranscription(stepper)">Fazer nova transcrição</button>
       </div>
     </div>
   </mat-step>
