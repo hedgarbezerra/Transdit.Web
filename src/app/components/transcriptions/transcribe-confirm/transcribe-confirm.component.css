@@ -1,0 +1,4 @@
+.mat-mdc-raised-button:not(:disabled):focus{
+  color: var(--main-bg-color);
+  background-color: whitesmoke;
+}

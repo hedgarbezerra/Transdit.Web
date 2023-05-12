@@ -1,4 +1,3 @@
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { DefaultResponse } from './../classes/DefaultResponse';
 import { FormControl, FormGroup } from "@angular/forms";
 
@@ -13,8 +12,12 @@ export function getQueryVariable(variable: string) : string | null
   }
   return null;
 }
+
 export function HandleRequestError<T extends DefaultResponse<any>>(err : any): [number, string] {
     if(err.status == 400){
+      if(typeof(err.error) === 'string')
+        return [400, err.error];
+
       let errAsResult = err.error as T;
       return [400, errAsResult.messages.join(' \n')];
     }
@@ -27,3 +30,46 @@ export function HandleRequestError<T extends DefaultResponse<any>>(err : any): [
     }
     return [err?.status ?? 500, 'Houve um erro inesperado com a conexão com o servidor, tente novamente em instantes.']
 }
+
+export function downloadFile(data: any, type: string): void {
+  let blob = new Blob([data], { type: type});
+  let url = window.URL.createObjectURL(blob);
+  let pwa = window.open(url);
+  if (!pwa || pwa.closed || typeof pwa.closed == 'undefined') {
+      alert( 'Please disable your Pop-up blocker and try again.');
+  }
+}
+
+export function base64ToArrayBuffer(base64: any) {
+  var binaryString = window.atob(base64);
+  var binaryLen = binaryString.length;
+  var bytes = new Uint8Array(binaryLen);
+  for (var i = 0; i < binaryLen; i++) {
+     var ascii = binaryString.charCodeAt(i);
+     bytes[i] = ascii;
+  }
+  return bytes;
+}
+
+export function saveData(data: Uint8Array, type: string, fileName: string) {
+  var a = document.createElement("a");
+  document.body.appendChild(a);
+  a.style.display = "none";
+  let blob = new Blob([data], {type: type}),
+      url = window.URL.createObjectURL(blob);
+
+  a.href = url;
+  a.download = fileName;
+  a.click();
+
+  window.URL.revokeObjectURL(url);
+  document.body.removeChild(a);
+}
+
+export function truncateDecimals(value: number, digits: number) {
+  var multiplier = Math.pow(10, digits),
+      adjustedNum = value * multiplier,
+      truncatedNum = Math[adjustedNum < 0 ? 'ceil' : 'floor'](adjustedNum);
+
+  return truncatedNum / multiplier;
+};

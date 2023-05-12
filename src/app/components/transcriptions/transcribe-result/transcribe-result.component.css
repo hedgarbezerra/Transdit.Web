@@ -1,0 +1,20 @@
+
+.transcription-content {
+  background-color: whitesmoke;
+  border: 2px solid var(--main-bg-color);
+  border-radius: 4px;
+  word-wrap: break-word;
+  min-height: 60vh;
+  padding: .5cm;
+}
+
+.transcription-container{
+  border-width: 2px;
+  border-radius: 4px;
+  border-color: var(--main-bg-color);
+}
+
+.transcription-main{
+  padding: .5cm;
+  margin-bottom: 3vh;
+}

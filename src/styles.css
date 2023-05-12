@@ -17,10 +17,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   cursor: pointer;
 }
 
-button:focus {
-  background-color: var(--main-bg-color) !important;
-  color: whitesmoke !important;
-}
 .mat-mdc-text-field-wrapper:not(.mdc-text-field--outlined) .mat-mdc-form-field-infix
 {
   padding-top: 15px !important;
@@ -56,4 +52,30 @@ nav ul li.active {
   height: 100%;
   z-index: 9999;
   backdrop-filter: blur(1.5px);
+}
+
+.mat-mdc-slide-toggle .mdc-switch:focus{
+background-color: transparent !important;
+}
+
+.mat-mdc-paginator-container{
+  justify-content: center !important;
+}
+
+.mat-horizontal-stepper-header-container {
+  margin-bottom: 3% !important;
+}
+
+input[type=range] {
+  margin: revert;
+  position: absolute !important;
+}
+
+.mdc-icon-button:focus {
+  background-color: transparent !important;
+}
+
+.mat-mdc-fab.mat-primary, .mat-mdc-mini-fab.mat-primary button:focus{
+  background-color: var(--main-bg-color) !important;
+  color: whitesmoke !important;
 }

@@ -49,15 +49,16 @@ export class PasswordChangeComponent {
   }
 
   onSubmit(){
+    var result;
     if(this.IsRequestingRecovery){
       let currentObj =  this.passwordResetForm.value as PasswordReset;
       currentObj.token = this.token ?? '';
       currentObj.email = this.user ?? '';
-      var result = this.userService.resetPassword(currentObj);
+      result = this.userService.resetPassword(currentObj);
     }
     else{
       let currentObj = this.passwordResetForm.value as PasswordUpdate;
-      var result =  this.userService.UpdatePassword(currentObj);
+       result =  this.userService.UpdatePassword(currentObj);
     }
 
     result.subscribe((operationResult: UserOperationResult) =>{

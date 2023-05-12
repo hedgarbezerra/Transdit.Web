@@ -1,0 +1,11 @@
+<div>
+  <p>
+    <button mat-stroked-button extended color="primary" (click)="emitTime()" disabled>
+      <mat-icon>play_arrow</mat-icon>
+      <span class="transcription-time"> {{item.startTimeSeconds | playtime }} - {{item.endTimeSeconds | playtime}}</span>
+    </button>
+  </p>
+    <span class="transcription-precision" [style.color]="precisionColor">({{item.precision | percentage}})</span> -
+    <span class="transcription-phrase" contenteditable="true">{{item.text}}</span>
+</div>
+<hr>

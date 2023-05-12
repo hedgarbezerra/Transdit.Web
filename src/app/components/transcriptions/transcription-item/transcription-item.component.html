@@ -1,1 +1,26 @@
-<p>transcription-item works!</p>
+<mat-card class="transcription-item">
+  <mat-card-header>
+    <div mat-card-avatar><mat-icon>description</mat-icon></div>
+    <mat-card-title>{{transcription.name}}</mat-card-title>
+    <mat-card-subtitle>#{{transcription.id}} | {{transcription.date | fromnow}}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-divider></mat-divider>
+  <mat-card-content>
+    <mat-slide-toggle color="primary" [(ngModel)]="showResult" [disabled]="!transcription.result">Visualizar conteúdo?</mat-slide-toggle>
+      <div class="transcription-card-result" >
+        <mat-form-field appearance="fill" *ngIf="showResult">
+          <mat-label>Conteúdo</mat-label>
+          <textarea id="result" matInput [(ngModel)]="transcription.result" class="transcription-item-result"></textarea>
+        </mat-form-field>
+      </div>
+  </mat-card-content>
+  <mat-divider></mat-divider>
+
+  <mat-card-actions>
+    <button mat-button [disabled]="!transcription.result" matTooltip="Exportar resultado em PDF" (click)="exportPdf()">PDF</button>
+    <button mat-button [disabled]="!transcription.result" matTooltip="Exportar resultado em TXT" (click)="exportTxt()">TXT</button>
+    <button mat-button [disabled]="!transcription.result" matTooltip="Exportar resultado em DOCX" (click)="exportDocx()">DOCX</button>
+    <button [disabled]="!AllowFromStorage" mat-stroked-button color="primary" matTooltip="Transcrever utilizando arquivo salvo"
+      (click)="TranscreverStorage()">Transcrever</button>
+  </mat-card-actions>
+</mat-card>

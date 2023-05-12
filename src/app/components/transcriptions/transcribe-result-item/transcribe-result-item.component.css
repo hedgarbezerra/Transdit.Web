@@ -1,0 +1,8 @@
+
+.transcription-phrase{
+  outline: none;
+}
+
+button:focus{
+  background-color: revert !important;
+}

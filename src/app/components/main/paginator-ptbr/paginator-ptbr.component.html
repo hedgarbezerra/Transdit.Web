@@ -1,0 +1,8 @@
+<mat-paginator #paginator [length]="pagination.count"
+    [pageSize]="pagination.size"
+    [pageIndex]="pagination.index"
+    [length]="pagination.count"
+    [pageSizeOptions]="[2, 5, 10, 20, 50]"
+    [showFirstLastButtons]="true"
+    (page)="handlePageEvent($event)">
+</mat-paginator>

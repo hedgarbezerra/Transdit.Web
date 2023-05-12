@@ -11,3 +11,8 @@ nav .nav-wrapper {
 .nav-main {
   margin-bottom: 3% !important;
 }
+
+button:focus {
+  background-color: whitesmoke;
+  color: var(--main-bg-color);
+}

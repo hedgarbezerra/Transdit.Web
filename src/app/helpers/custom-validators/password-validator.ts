@@ -1,5 +1,6 @@
-import { AbstractControl, FormControl, ValidationErrors,  ValidatorFn } from "@angular/forms";
+import { AbstractControl, FormControl, FormGroup, ValidationErrors,  ValidatorFn } from "@angular/forms";
 import * as moment from "moment";
+
 
 export function PasswordValidator(): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
@@ -32,3 +33,65 @@ export function RequiredIf(condition: boolean): ValidatorFn{
     return condition && !control.value ? { requiredif : { value: control.value} } : null;
   }
 }
+
+
+export function OneOf(formNames: string[]): ValidatorFn{
+  return (control: AbstractControl): ValidationErrors | null => {
+    if(formNames.length <= 0)
+      return null;
+    console.log(control);
+    let formGroup = control.parent as FormGroup;
+    console.log(formGroup)
+    if(formGroup == null)
+      return null;
+
+    const hasAtLeastOne = formNames.some(f => formGroup.controls[f].value != null && formGroup.controls[f].value !== '');
+    return hasAtLeastOne ? null :{ oneOf : { value: control.value} } ;
+  }
+}
+
+export function PermitedFiles(permittedExtensions: string[]): ValidatorFn{
+  return (control: AbstractControl): ValidationErrors | null => {
+    if(control.value == null)
+      return null;
+
+    let fileExt = splitOnLast(control.value, '.').pop() ?? '';
+    let extInPermitedExt = permittedExtensions.includes(fileExt, 0);
+
+    return extInPermitedExt ? null : { permittedExtension : { value: control.value} };
+  }
+}
+
+export function splitOnLast(value: string, e: string) {
+  var t = value.lastIndexOf(e);
+  return t < 0 ? [value] : [value.substring(0, t), value.substring(t)]
+}
+
+export const atLeastOne = (validator: ValidatorFn, controls:string[]) => (
+  group: FormGroup,
+): ValidationErrors | null => {
+  if(!controls){
+    controls = Object.keys(group.controls)
+  }
+
+  const hasAtLeastOne = group && group.controls && controls
+    .some(k => !validator(group.controls[k]));
+
+  return hasAtLeastOne ? null : {
+    atLeastOne: true,
+  };
+};
+
+export function GroupOneOf(validator: ValidatorFn, controls:string[]|null): ValidatorFn{
+  return (control: AbstractControl): ValidationErrors | null => {
+    var group = control as FormGroup;
+    if(!controls || controls.length<= 0){
+      controls = Object.keys(group.controls)
+    }
+    const hasAtLeastOne = group && group.controls && controls
+    .some(k => !validator(group.controls[k]));
+    return hasAtLeastOne ? null : {
+      atLeastOne: true,
+    };
+  }
+};

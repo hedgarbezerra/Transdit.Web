@@ -27,11 +27,12 @@
             "styles": [
               "@angular/material/prebuilt-themes/deeppurple-amber.css",
               "src/styles.css",
+              "node_modules/@videogular/ngx-videogular/fonts/videogular.css",
               "./node_modules/materialize-css/dist/css/materialize.css"
             ],
             "scripts": [
               "./node_modules/materialize-css/dist/js/materialize.js",
-              "./node_modules/moment/moment.js"
+              "./node_modules/moment/min/moment-with-locales.js"
             ],
             "stylePreprocessorOptions": {
               "includePaths": ["node_modules/"]
