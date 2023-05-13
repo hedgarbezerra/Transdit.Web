@@ -48,7 +48,7 @@
                   formControlName="password" [type]="hidePassword ? 'password' : 'text'">
           <mat-error *ngIf="passwordForm.errors?.['required']">A senha é obrigatória </mat-error>
           <mat-error *ngIf="passwordForm.errors?.['pattern']">A senha deve ter pelo menos um caractere especial, uma letra em maiusculo,
-             uma letra em minusculo</mat-error>
+             uma letra em minusculo e um número</mat-error>
           <button type="button" mat-icon-button matSuffix (click)="hidePassword = !hidePassword"
                   [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
             <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
@@ -63,7 +63,7 @@
                 formControlName="passwordConfirm" [type]="hidePasswordConfirm ? 'password' : 'text'">
                 <mat-error *ngIf="passwordConfirmForm.errors?.['required']">A confirmação da senha é obrigatória</mat-error>
                 <mat-error *ngIf="passwordConfirmForm.errors?.['pattern']">A confirmação da senha deve ter pelo menos um caractere especial, uma letra em maiusculo,
-                   uma letra em minusculo</mat-error>
+                   uma letra em minusculo e um número</mat-error>
                 <mat-error *ngIf="passwordConfirmForm.errors?.['same']">A confirmação da senha deve ser igual à senha</mat-error>
                 <button type="button" mat-icon-button matSuffix (click)="hidePasswordConfirm = !hidePasswordConfirm"
                         [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePasswordConfirm">

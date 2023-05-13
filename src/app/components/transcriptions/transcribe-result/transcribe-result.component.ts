@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { ExportFormat } from 'src/app/classes/Transcriptions/ExportFormat.enum';
 import { TranscriptionResult } from 'src/app/classes/Transcriptions/TranscriptionResult';
 import { base64ToArrayBuffer, saveData } from 'src/app/helpers/HelperFunctions';
@@ -6,6 +6,8 @@ import { TranscriptionItemExportconfirmComponent } from '../transcription-item-e
 import { ExportService } from 'src/app/services/transcriptions/export.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Player } from '@vime/angular';
+import { TranscriptionPlayEvent } from 'src/app/classes/Transcriptions/TranscriptionPlayEvent';
 
 @Component({
   selector: 'app-transcribe-result',
@@ -14,6 +16,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class TranscribeResultComponent {
 constructor(private exportService: ExportService, private dialog: MatDialog, private snackBar: MatSnackBar){}
+  @ViewChild('player')
+   player!: Player;
 
   @Input()
   result!: TranscriptionResult;
@@ -21,8 +25,34 @@ constructor(private exportService: ExportService, private dialog: MatDialog, pri
   @Input()
   name!: string;
 
-  playMedia(event: any){
-    console.log(event);
+  currentTime = 0;
+  limitTime = 0;
+
+  get uri(){
+    return !this.result ? '' : this.result.storageUri;
+  }
+
+  playMedia(event: TranscriptionPlayEvent){
+    if(!this.player.canPlay)
+      return;
+
+    this.currentTime = event.startTimeSeconds;
+    this.limitTime = event.endTimeSeconds;
+
+    if(this.player.muted)
+      this.player.volume = 100;
+
+    this.player.play();
+  }
+
+  onTimeUpdate(event: CustomEvent<number>) {
+    this.currentTime = event.detail;
+    var stopTime = (this.limitTime > 0 ) ? this.limitTime : this.player.duration;
+
+    if(this.currentTime >= stopTime){
+      this.player.pause();
+      this.limitTime = this.player.duration;
+    }
   }
 
   getContent(){
@@ -94,7 +124,7 @@ constructor(private exportService: ExportService, private dialog: MatDialog, pri
           this.snackBar.open('O conteúdo à ser transcrito parece estar vazio.', 'Fechar');
           return;
         }
-        
+
         this.exportService.ExportTranscriptionResult(content, ExportFormat.DOCX)
         .subscribe(res =>{
           var bytes = base64ToArrayBuffer(res);

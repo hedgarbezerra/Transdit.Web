@@ -14,5 +14,6 @@ export interface TranscriptionResult extends DefaultResponse<Array<Transcription
   data: TranscriptionResultItem[]
   messages: string[]
   fileName: string
+  storageUri: string
   date: Date
 }
