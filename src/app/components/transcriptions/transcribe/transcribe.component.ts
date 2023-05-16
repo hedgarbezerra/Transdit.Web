@@ -207,7 +207,7 @@ export class TranscribeComponent {
   ngOnInit() {
     this.LoadLanguageCodes();
     this.LoadPermittedFiles();
-    //this.LoadCustomDictionaries();
+    this.LoadCustomDictionaries();
   }
 
   addDictionary(): void{
