@@ -188,7 +188,8 @@
             </mat-select-trigger>
             <mat-optgroup *ngFor="let language of languages" [label]="language.key" aria-selected="true">
               <mat-option *ngFor="let langCode of language.codes" [value]="langCode">
-                {{langCode}}
+                <span class="option-code">{{langCode}}</span>
+                <div class="option-flag right fi-{{langCode | languagecodeflag}}"></div>
               </mat-option>
             </mat-optgroup>
           </mat-select>
