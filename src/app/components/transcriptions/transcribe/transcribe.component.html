@@ -1,4 +1,4 @@
-<mat-stepper [linear]="true" #stepper >
+<mat-stepper  #stepper >
   <mat-step label="Selecione sua mídia" [stepControl]="firstPageFormG" [editable]="!isCompleted" matStepperIcon="attach_file_add" state="attach_file_add">
     <form [formGroup]="firstPageFormG">
       <div class="row">
@@ -35,7 +35,7 @@
           </mat-slide-toggle>
         </div>
       </div>          
-      <div class="row" *ngIf="showTimeRange && selectedFile">
+      <div class="row" *ngIf="showTimeRange && (!firstPageFormG.touched || (firstPageFormG.touched && firstPageFormG.valid))">
         <div class="col s6">
           <label for="startTime">Inicio:</label>
           <input id="startTime" type="time" step="1" formControlName="rangeStartTime"/>

@@ -6,7 +6,7 @@ import { Dictionary, DictionaryWord, OutDictionary } from 'src/app/classes/Dicti
 import { TranscriptionInput } from 'src/app/classes/Transcriptions/InputTranscription';
 import { TranscriptionResult } from 'src/app/classes/Transcriptions/TranscriptionResult';
 import { getFormFromGroup } from 'src/app/helpers/HelperFunctions';
-import { OneOf, RequiredIf, PermitedFiles, atLeastOne, GroupOneOf, MaxFileSize } from 'src/app/helpers/custom-validators/password-validator';
+import { RequiredIf, PermitedFiles, GroupOneOf, MaxFileSize } from 'src/app/helpers/custom-validators/password-validator';
 import { DictionariesService } from 'src/app/services/customDictionary/dictionary-service.service';
 import { TranscriptionsService } from 'src/app/services/transcriptions/transcriptions.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -28,6 +28,7 @@ import { RemoveWordConfirmComponent } from '../../custom-dictionary/remove-word-
       useValue: {displayDefaultIndicatorType: false, showError: false},
     },
   ],
+  animations:[]
 })
 
 export class TranscribeComponent {
