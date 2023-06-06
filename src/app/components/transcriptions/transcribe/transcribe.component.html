@@ -21,10 +21,29 @@
           <label for="files" class="drop-container">
             <span class="drop-title">Arraste e solte arquivo aqui</span>
             ou
-            <input id="files" name="files" formControlName="file" type="file" [accept]="acceptFiles"
-             (change)="fileChanged($event)">
+            <input id="files" name="files" formControlName="file" type="file" [accept]="acceptFiles" (change)="fileChanged($event)">
             <span class="file-error" *ngIf="file.errors?.['permittedExtension']">Tipo de arquivo não permitido</span>
+            <span class="file-error" *ngIf="file.errors?.['maxsize']">O tamanho máximo de um arquivo é de 500MB(Megabytes)</span>
           </label>
+        </div>
+      </div>
+
+      <div class="row" *ngIf="file.touched && file.valid">
+        <div class="col s12">
+          <h3>Deseja limitar o tempo da transcrição?</h3>
+          <mat-slide-toggle color="primary" [(ngModel)]="showTimeRange" [ngModelOptions]="{standalone: true}">
+          </mat-slide-toggle>
+        </div>
+      </div>          
+      <div class="row" *ngIf="showTimeRange && selectedFile">
+        <div class="col s6">
+          <label for="startTime">Inicio:</label>
+          <input id="startTime" type="time" step="1" formControlName="rangeStartTime"/>
+          <span class="file-error" *ngIf="file.errors?.['permittedExtension']">Tipo de arquivo não permitido</span>
+        </div>
+        <div class="col s6">        
+          <label for="endTime">Fim:</label>
+          <input id="endTime" type="time" step="1" formControlName="rangeEndTime"/>
         </div>
       </div>
 
@@ -56,11 +75,12 @@
             <input type="text" placeholder="Selecione o idioma principal" aria-label="Idioma" matInput
               formControlName="language" [matAutocomplete]="auto">
             <mat-error *ngIf="languageForm.errors?.['required']">Idioma da mídia é obrigatório</mat-error>
-            <mat-autocomplete #auto >
+            <mat-autocomplete #auto multiple>
               <mat-option>Nenhum</mat-option>
               <mat-optgroup *ngFor="let language of filteredMainLanguage| async" [label]="language.key" aria-selected="true">
                 <mat-option *ngFor="let langCode of language.codes" [value]="langCode">
-                  {{langCode}}
+                  <span class="option-code">{{langCode}}</span>
+                  <div class="option-flag right fi-{{langCode | languagecodeflag}}"></div>
                 </mat-option>
               </mat-optgroup>
             </mat-autocomplete>

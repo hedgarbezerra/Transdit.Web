@@ -34,7 +34,7 @@ import { ErrorHandlingHttpInterceptor } from './helpers/ErrorHandlingHttpInterce
 import { PaginatorPtbrComponent, PaginatorPtbrService } from './components/main/paginator-ptbr/paginator-ptbr.component';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { TranscriptionItemExportconfirmComponent } from './components/transcriptions/transcription-item-exportconfirm/transcription-item-exportconfirm.component';
-import { MomentsFromNowPipe, PercentagePipe, SecondsToPlaytimePipe } from './helpers/diretives/MomentsFromNow.pipe';
+import { LanguageCodeFlag, MomentsFromNowPipe, PercentagePipe, SecondsToPlaytimePipe } from './helpers/diretives/MomentsFromNow.pipe';
 import { TranscriptionItemTranscribeconfirmComponent } from './components/transcriptions/transcription-item-transcribeconfirm/transcription-item-transcribeconfirm.component';
 import { NotFoundComponent } from './components/main/not-found/not-found.component';
 import { NewDictionaryComponent } from './components/custom-dictionary/new-dictionary/new-dictionary.component';
@@ -42,6 +42,9 @@ import { RemoveWordConfirmComponent } from './components/custom-dictionary/remov
 import { TranscribeConfirmComponent } from './components/transcriptions/transcribe-confirm/transcribe-confirm.component';
 import { TranscribeResultComponent } from './components/transcriptions/transcribe-result/transcribe-result.component';
 import { TranscribeResultItemComponent } from './components/transcriptions/transcribe-result-item/transcribe-result-item.component';
+import { GoogleLoginProvider, GoogleSigninButtonModule, MicrosoftLoginProvider, SocialAuthServiceConfig, SocialLoginModule } from '@abacritt/angularx-social-login';
+
+import { environment } from 'src/environments/environment';
 
 
 @NgModule({
@@ -76,7 +79,8 @@ import { TranscribeResultItemComponent } from './components/transcriptions/trans
 
     MomentsFromNowPipe,
     SecondsToPlaytimePipe,
-    PercentagePipe
+    PercentagePipe,
+    LanguageCodeFlag,
   ],
   imports: [
     BrowserModule,
@@ -87,14 +91,40 @@ import { TranscribeResultItemComponent } from './components/transcriptions/trans
     ReactiveFormsModule,
     MaterialExportModule,
     HttpClientModule,
-    VimeModule
+    VimeModule,
+    SocialLoginModule,
+    GoogleSigninButtonModule
   ],
   providers: [{provide: MAT_DATE_LOCALE, useValue: 'pt-br'},
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
     { provide: HTTP_INTERCEPTORS, useClass: UnauthenticatedInterceptor, multi: true},
     { provide: HTTP_INTERCEPTORS, useClass: ErrorHandlingHttpInterceptor, multi: true},
     { provide: HTTP_INTERCEPTORS, useClass: RequestLoaderInterceptor, multi: true},
-    {provide: MatPaginatorIntl, useClass: PaginatorPtbrService},
+    { provide: MatPaginatorIntl, useClass: PaginatorPtbrService},
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(
+              environment.googleClientId, { }
+            )
+          },
+          {
+            id: MicrosoftLoginProvider.PROVIDER_ID,
+            provider: new MicrosoftLoginProvider('f682f08d-5c96-47dc-b31c-8d1abb35117f', {
+              redirect_uri: 'http://localhost:4200/cadastro',
+              
+            })
+          }
+        ],
+        onError: (err: any) => {
+          console.error(err);
+        }
+      } as SocialAuthServiceConfig
+    }
   ],
   bootstrap: [AppComponent]
 })

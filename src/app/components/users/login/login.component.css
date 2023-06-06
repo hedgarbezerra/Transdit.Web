@@ -1,0 +1,12 @@
+.msbutton-img{
+    height: 44px;
+    width: 64px;
+}
+
+.msbutton{
+    background-color: white;
+    box-shadow: none !important;
+    border: 1px solid #dadce0;
+    overflow: hidden;
+    overflow-x: clip;
+}

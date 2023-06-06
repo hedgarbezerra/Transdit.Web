@@ -2,9 +2,7 @@ import { ENTER, COMMA } from '@angular/cdk/keycodes';
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatChipInputEvent } from '@angular/material/chips';
-import { Dictionary, DictionaryWord } from 'src/app/classes/Dictionaries/Dictionaries';
 import { getFormFromGroup } from 'src/app/helpers/HelperFunctions';
-import { GroupOneOf } from 'src/app/helpers/custom-validators/password-validator';
 
 @Component({
   selector: 'app-new-dictionary',

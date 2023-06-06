@@ -6,7 +6,7 @@ import { Dictionary, DictionaryWord, OutDictionary } from 'src/app/classes/Dicti
 import { TranscriptionInput } from 'src/app/classes/Transcriptions/InputTranscription';
 import { TranscriptionResult } from 'src/app/classes/Transcriptions/TranscriptionResult';
 import { getFormFromGroup } from 'src/app/helpers/HelperFunctions';
-import { OneOf, RequiredIf, PermitedFiles, atLeastOne, GroupOneOf } from 'src/app/helpers/custom-validators/password-validator';
+import { OneOf, RequiredIf, PermitedFiles, atLeastOne, GroupOneOf, MaxFileSize } from 'src/app/helpers/custom-validators/password-validator';
 import { DictionariesService } from 'src/app/services/customDictionary/dictionary-service.service';
 import { TranscriptionsService } from 'src/app/services/transcriptions/transcriptions.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -44,11 +44,12 @@ export class TranscribeComponent {
   toTranscribe!: TranscriptionInput;
   transcriptionResults!: TranscriptionResult;
   
+  showTimeRange = false;
   showHints = false;
   showAdditionalLanguages = false;
   isCompleted = false;
 
-  selectedFile!: File;
+  selectedFile!: File|null;
   uploadedFileName!: string;
   uploadedIsConverted!: boolean;
   filteredMainLanguage!: Observable<any[]>;
@@ -59,14 +60,22 @@ export class TranscribeComponent {
 
   firstPageFormG = new FormGroup({
     youtubeUrl: new FormControl('', [Validators.pattern(/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/)]),
-    file: new FormControl('', []),
-  }, [GroupOneOf(Validators.required, [])]);
+    file: new FormControl('', ), //TODO: [MaxFileSize(524288000)]),
+    rangeStartTime: new FormControl('00:00:00', [RequiredIf(this.showTimeRange)]),
+    rangeEndTime: new FormControl('00:00:00', [RequiredIf(this.showTimeRange)])
+  }, [GroupOneOf(Validators.required, ['file', 'youtubeUrl'])]);
 
   get url() : FormControl{
     return getFormFromGroup('youtubeUrl', this.firstPageFormG);
   }
   get file() : FormControl{
     return getFormFromGroup('file', this.firstPageFormG);
+  }
+  get rangeStartTime() : FormControl{
+    return getFormFromGroup('rangeStartTime', this.firstPageFormG);
+  }
+  get rangeEndTime() : FormControl{
+    return getFormFromGroup('rangeEndTime', this.firstPageFormG);
   }
 
   secondPageFormG = new FormGroup({
@@ -153,11 +162,14 @@ export class TranscribeComponent {
 
     let files = (event.target as HTMLInputElement)?.files;
     let file = !files ? null: files[0];
-    if(!file) return;
-
+    if(!file){
+      this.selectedFile = null;
+      return;
+    }
     const reader = new FileReader();
     reader.readAsDataURL(file);
     this.selectedFile = file;
+    //TODO: Considerar tratar o comportamento da validação de mb aqui
   }
 
   streamUploadFile(file: File) {
@@ -296,12 +308,15 @@ export class TranscribeComponent {
     })
   }
 
-
   HandleFirstStep(stepper: MatStepper){
     if(this.url.value && this.url.valid){
       stepper.next();
     }
     else{
+      if(!this.selectedFile){
+        this.snackBar.open('Houve um erro com a mídia selecionada, selecione novamente.', 'OK', {duration: 5000});
+        return;
+      }
       this.streamUploadFile(this.selectedFile)
       .subscribe(res =>{
         this.uploadedIsConverted = res.isConverted;

@@ -1,4 +1,4 @@
-import { EMPTY, Observable, catchError, of, tap } from 'rxjs';
+import { EMPTY, Observable, Subject, catchError, of, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivateChildFn, CanActivateFn, Router, RouterStateSnapshot } from '@angular/router';
@@ -6,6 +6,8 @@ import { AuthenticationResult, Token } from 'src/app/classes/Users/Authenticatio
 import { environment } from 'src/environments/environment';
 import { Login } from 'src/app/classes/Users/Users';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { SocialAuthenticationService } from './social-authentication.service';
+import { LoginTarget } from 'src/app/classes/Users/SocialAuthentication';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +16,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 @Injectable()
 export class AuthenticationService {
 
-  constructor(private httpClient:HttpClient, private snackBar: MatSnackBar, private router: Router,) {}
+  constructor(private httpClient:HttpClient, private snackBar: MatSnackBar, private router: Router, private socialAuth: SocialAuthenticationService) {
+
+  }
 
   get token() : string{
     if(this.jwtToken == null)
@@ -34,17 +38,22 @@ export class AuthenticationService {
   authenticate(login: Login) : Observable<AuthenticationResult>{
     return this.httpClient.post<AuthenticationResult>(`${environment.apiUrl}/authentication`, login) ;
   }
+  authenticateSocial(target: LoginTarget): void{
+    this.socialAuth.authenticate(target);
+  }
 
   login(login: Login) : Observable<AuthenticationResult>{
     return this.authenticate(login);
   }
-
+  
   async logout(){
     this.snackBar.open('Você está sendo desconectado...', 'Fechar', { duration: 2000, verticalPosition: 'top'});
     setTimeout(() => this.router.navigate(['/login']), 2000);
 
     localStorage.clear();
+    this.socialAuth.signOutExternal();
   }
+
 
   checkAuthenticated(): boolean {
     if(this.jwtToken == null)

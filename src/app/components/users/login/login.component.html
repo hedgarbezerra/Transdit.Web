@@ -37,7 +37,15 @@
     </div>
   </div>
   <div class="row">
-    <div class="col s12 l12">
+    <div class="col s1 l1"> 
+      <asl-google-signin-button type='icon' size='large' shape="circle" text="continue_with"></asl-google-signin-button>
+    </div>
+    <div class="col s1 l1">
+      <button type="button" class="msbutton" mat-mini-fab (click)="microsoftLogin()">
+        <img src="../../../../assets/Microsoft-Logo.png" alt="microsoft" class="msbutton-img">
+      </button>
+    </div>
+    <div class="col s4 l4 offset-l6">
       <button type="submit" mat-flat-button color="primary" class="right" [disabled]="loginForm.invalid">
         <mat-icon>login</mat-icon>
         Entrar
