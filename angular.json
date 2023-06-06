@@ -28,6 +28,7 @@
             ],
             "styles": [
               "src/styles.css",
+              "src/assets/flags/css/flag-icons.css",
               "@angular/material/prebuilt-themes/deeppurple-amber.css",
               "./node_modules/materialize-css/dist/css/materialize.css",
               "./node_modules/@vime/core/themes/default.css"

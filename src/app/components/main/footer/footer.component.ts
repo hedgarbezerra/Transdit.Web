@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { UsetermsComponent } from '../useterms/useterms.component';
 import { UseinformationsComponent } from '../useinformations/useinformations.component';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { FooterLanguageSelectorComponent } from '../footer-language-selector/footer-language-selector.component';
 
 @Component({
   selector: 'app-footer',
@@ -11,7 +13,7 @@ import { UseinformationsComponent } from '../useinformations/useinformations.com
 export class FooterComponent {
   currentDate = new Date();
 
-  constructor(public dialog: MatDialog){ }
+  constructor(private bottomSheet: MatBottomSheet,public dialog: MatDialog){ }
 
 
   showUseTerms(){
@@ -25,6 +27,17 @@ export class FooterComponent {
     const dialogRef = this.dialog.open(UseinformationsComponent, { enterAnimationDuration: '200'});
 
     dialogRef.afterClosed().subscribe(result => {
+       
     });
+  }
+
+  showLanguageSelection(){
+    let selector = this.bottomSheet.open(FooterLanguageSelectorComponent);
+
+    selector.afterDismissed()
+      .subscribe(() =>{
+        let lang = selector.instance.selectedLang;
+        localStorage.setItem('app-lang', lang);
+    })
   }
 }

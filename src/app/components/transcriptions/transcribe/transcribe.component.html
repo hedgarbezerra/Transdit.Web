@@ -28,7 +28,7 @@
         </div>
       </div>
 
-      <div class="row" *ngIf="file.touched && file.valid">
+      <div class="row" *ngIf="firstPageFormG.valid">
         <div class="col s12">
           <h3>Deseja limitar o tempo da transcrição?</h3>
           <mat-slide-toggle color="primary" [(ngModel)]="showTimeRange" [ngModelOptions]="{standalone: true}">

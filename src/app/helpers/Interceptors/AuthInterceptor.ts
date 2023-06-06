@@ -1,6 +1,6 @@
 import { catchError, EMPTY, throwError } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { AuthenticationService } from '../services/users/authentication.service';
+import { AuthenticationService } from '../../services/users/authentication.service';
 import {
   HttpInterceptor,
   HttpRequest,

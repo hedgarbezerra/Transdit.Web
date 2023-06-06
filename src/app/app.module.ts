@@ -27,10 +27,10 @@ import { UseinformationsComponent } from './components/main/useinformations/usei
 import { UserMainComponent } from './components/users/user-main/user-main.component';
 import { TranscriptionItemComponent } from './components/transcriptions/transcription-item/transcription-item.component';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
-import { AuthInterceptor, UnauthenticatedInterceptor } from './helpers/AuthInterceptor';
-import { RequestLoaderInterceptor } from './helpers/RequestLoaderInterceptor';
+import { AuthInterceptor, UnauthenticatedInterceptor } from './helpers/Interceptors/AuthInterceptor';
+import { RequestLoaderInterceptor } from './helpers/Interceptors/RequestLoaderInterceptor';
 import { LoadingSpinnerComponent } from './components/main/loading-spinner/loading-spinner.component';
-import { ErrorHandlingHttpInterceptor } from './helpers/ErrorHandlingHttpInterceptor';
+import { ErrorHandlingHttpInterceptor } from './helpers/Interceptors/ErrorHandlingHttpInterceptor';
 import { PaginatorPtbrComponent, PaginatorPtbrService } from './components/main/paginator-ptbr/paginator-ptbr.component';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { TranscriptionItemExportconfirmComponent } from './components/transcriptions/transcription-item-exportconfirm/transcription-item-exportconfirm.component';
@@ -45,6 +45,8 @@ import { TranscribeResultItemComponent } from './components/transcriptions/trans
 import { GoogleLoginProvider, GoogleSigninButtonModule, MicrosoftLoginProvider, SocialAuthServiceConfig, SocialLoginModule } from '@abacritt/angularx-social-login';
 
 import { environment } from 'src/environments/environment';
+import { LanguageInterceptor } from './helpers/Interceptors/LanguageInterceptor';
+import { FooterLanguageSelectorComponent } from './components/main/footer-language-selector/footer-language-selector.component';
 
 
 @NgModule({
@@ -81,6 +83,7 @@ import { environment } from 'src/environments/environment';
     SecondsToPlaytimePipe,
     PercentagePipe,
     LanguageCodeFlag,
+    FooterLanguageSelectorComponent,
   ],
   imports: [
     BrowserModule,
@@ -98,6 +101,7 @@ import { environment } from 'src/environments/environment';
   providers: [{provide: MAT_DATE_LOCALE, useValue: 'pt-br'},
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
     { provide: HTTP_INTERCEPTORS, useClass: UnauthenticatedInterceptor, multi: true},
+    { provide: HTTP_INTERCEPTORS, useClass: LanguageInterceptor, multi: true},
     { provide: HTTP_INTERCEPTORS, useClass: ErrorHandlingHttpInterceptor, multi: true},
     { provide: HTTP_INTERCEPTORS, useClass: RequestLoaderInterceptor, multi: true},
     { provide: MatPaginatorIntl, useClass: PaginatorPtbrService},
