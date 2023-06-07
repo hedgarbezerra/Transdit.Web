@@ -37,3 +37,13 @@ export class PercentagePipe  implements PipeTransform{
   }
 }
 
+@Pipe({name: 'languagecodeflag'})
+export class LanguageCodeFlag  implements PipeTransform{
+  constructor() {  }
+  transform(value: string, ...args: any[]) : string {
+    let code = value.split('-').pop();
+    if(!code)
+      return value;
+    return code.toLowerCase();
+  }
+}

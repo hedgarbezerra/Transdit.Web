@@ -34,14 +34,12 @@ export function RequiredIf(condition: boolean): ValidatorFn{
   }
 }
 
-
 export function OneOf(formNames: string[]): ValidatorFn{
   return (control: AbstractControl): ValidationErrors | null => {
     if(formNames.length <= 0)
       return null;
-    console.log(control);
+      
     let formGroup = control.parent as FormGroup;
-    console.log(formGroup)
     if(formGroup == null)
       return null;
 
@@ -49,10 +47,20 @@ export function OneOf(formNames: string[]): ValidatorFn{
     return hasAtLeastOne ? null :{ oneOf : { value: control.value} } ;
   }
 }
+export function MaxFileSize(maxSize: number): ValidatorFn{
+  return (control: AbstractControl): ValidationErrors | null => {
+    if(!control.value)
+      return null;
+    console.log(control)
+    const file: File = control.value
+    var size = file.size
+    return control.value ? null : { maxsize : { value: control.value} };
+  }
+}
 
 export function PermitedFiles(permittedExtensions: string[]): ValidatorFn{
   return (control: AbstractControl): ValidationErrors | null => {
-    if(control.value == null)
+    if(!control.value)
       return null;
 
     let fileExt = splitOnLast(control.value, '.').pop() ?? '';
@@ -60,11 +68,6 @@ export function PermitedFiles(permittedExtensions: string[]): ValidatorFn{
 
     return extInPermitedExt ? null : { permittedExtension : { value: control.value} };
   }
-}
-
-export function splitOnLast(value: string, e: string) {
-  var t = value.lastIndexOf(e);
-  return t < 0 ? [value] : [value.substring(0, t), value.substring(t)]
 }
 
 export const atLeastOne = (validator: ValidatorFn, controls:string[]) => (
@@ -95,3 +98,12 @@ export function GroupOneOf(validator: ValidatorFn, controls:string[]|null): Vali
     };
   }
 };
+
+
+
+
+
+export function splitOnLast(value: string, e: string) {
+  var t = value.lastIndexOf(e);
+  return t < 0 ? [value] : [value.substring(0, t), value.substring(t)]
+}

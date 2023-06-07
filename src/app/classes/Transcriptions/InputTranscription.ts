@@ -3,6 +3,8 @@ export interface TranscriptionInput {
   fileName: string
   language: string
   youtubeUrl: string
+  startTime: string
+  endTime: string
   speakers: number
   hintsImpact: number
   hints: string[]
