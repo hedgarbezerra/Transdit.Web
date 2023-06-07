@@ -49,19 +49,18 @@ export function OneOf(formNames: string[]): ValidatorFn{
 }
 export function MaxFileSize(maxSize: number): ValidatorFn{
   return (control: AbstractControl): ValidationErrors | null => {
-    if(control.value == null)
+    if(!control.value)
       return null;
-    console.log(control.value)
+    console.log(control)
     const file: File = control.value
     var size = file.size
-    console.log(size);
     return control.value ? null : { maxsize : { value: control.value} };
   }
 }
 
 export function PermitedFiles(permittedExtensions: string[]): ValidatorFn{
   return (control: AbstractControl): ValidationErrors | null => {
-    if(control.value == null)
+    if(!control.value)
       return null;
 
     let fileExt = splitOnLast(control.value, '.').pop() ?? '';

@@ -17,6 +17,7 @@ import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { MatStepper } from '@angular/material/stepper';
 import { TranscribeConfirmComponent } from '../transcribe-confirm/transcribe-confirm.component';
 import { RemoveWordConfirmComponent } from '../../custom-dictionary/remove-word-confirm/remove-word-confirm.component';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-transcribe',
@@ -61,9 +62,9 @@ export class TranscribeComponent {
 
   firstPageFormG = new FormGroup({
     youtubeUrl: new FormControl('', [Validators.pattern(/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/)]),
-    file: new FormControl('', ), //TODO: [MaxFileSize(524288000)]),
-    rangeStartTime: new FormControl('00:00:00', [RequiredIf(this.showTimeRange)]),
-    rangeEndTime: new FormControl('00:00:00', [RequiredIf(this.showTimeRange)])
+    file: new FormControl('', []),
+    rangeStartTime: new FormControl('00:00:00', []),
+    rangeEndTime: new FormControl('00:00:00',[])
   }, [GroupOneOf(Validators.required, ['file', 'youtubeUrl'])]);
 
   get url() : FormControl{
@@ -107,8 +108,7 @@ export class TranscribeComponent {
   get customDictionaryIdForm () : FormControl{
     return getFormFromGroup('customDictionaryId', this.secondPageFormG);
   }
-
-
+  
   ShowHintChanged(){
     this.customDictionaryIdForm.reset();
     this.hintsImpactForm.reset();
@@ -167,10 +167,13 @@ export class TranscribeComponent {
       this.selectedFile = null;
       return;
     }
+
     const reader = new FileReader();
     reader.readAsDataURL(file);
     this.selectedFile = file;
-    //TODO: Considerar tratar o comportamento da validação de mb aqui
+    
+    if(file.size > environment.maxfileSize)
+      this.file.setErrors({maxsize: true});
   }
 
   streamUploadFile(file: File) {
