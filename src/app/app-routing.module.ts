@@ -29,19 +29,21 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: MainComponent
+        component: MainComponent,
+        data:{animation: 'mainPage'}
       },
       {
         path: 'transcricoes',
         children:[
-
           {
             path: '',
-            component: MainComponent
+            component: MainComponent,
+            data:{animation: 'transcriptionsPage'}
           },
           {
             path: 'transcrever',
-            component: TranscribeComponent
+            component: TranscribeComponent,
+            data:{animation: 'transcribePage'}
           }
         ]
       },
@@ -50,64 +52,75 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            component: UserMainComponent
+            component: UserMainComponent,
+            data:{animation: 'usersMainPage'}
           },
           {
             path: 'email',
-            component: EmailChangeComponent
+            component: EmailChangeComponent,
+            data:{animation: 'usersEmailPage'},
+            outlet: 'users',
           },
           {
             path: 'senha',
-            component: PasswordChangeComponent
+            component: PasswordChangeComponent,
+            data:{animation: 'usersPasswordPage'},
           },
           {
             path: 'plano',
-            component: PlanChangeComponent
+            component: PlanChangeComponent,
+            data:{animation: 'usersPlanPage'},
           }
         ]
       },
       {
         path: 'dicionarios',
-        children:[
-          {
-            path: '',
-            component: DictionaryMainComponent
-          }
-        ]
+        component: DictionaryMainComponent,
+        data:{animation: 'dictionariesMainPage'}
       }
-    ]
+    ],
   },
   {
     path: 'cadastro',
-    component: SignupComponent
+    component: SignupComponent,
+    data:{animation: 'signupPage'}
   },
   {
     path: 'login',
-    component: LoginComponent
+    component: LoginComponent,
+    data:{animation: 'loginPage'},    
   },
   {
     path: 'senha-perdida',
-    component: RecoveryComponent
+    component: RecoveryComponent,
+    data:{animation: 'lostPasswordPage'},    
   },
   {
     path: 'recuperacao',
-    component: PasswordChangeComponent
+    component: PasswordChangeComponent,
+    data:{animation: 'recoveryPage'},    
   },
   {
     path: 'confirmacao',
-    component: ConfirmationComponent
+    component: ConfirmationComponent,
+    data:{animation: 'accountConfirmationPage'}
   },
   {
     path: 'termos-uso',
-    component: UsetermsComponent
+    component: UsetermsComponent,
+    data:{animation: 'usetermsPage'},
+    
   },
   {
     path: 'informacoes-uso',
-    component: UseinformationsComponent
+    component: UseinformationsComponent,
+    data:{animation: 'useInformationPage'},
+    
   },
   {
     path: '**',
-    component: NotFoundComponent
+    component: NotFoundComponent,
+    data:{animation: 'notfoundPage'},
   }
 ];
 

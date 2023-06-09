@@ -18,6 +18,7 @@ import { MatStepper } from '@angular/material/stepper';
 import { TranscribeConfirmComponent } from '../transcribe-confirm/transcribe-confirm.component';
 import { RemoveDictionaryConfirmComponent } from '../../custom-dictionary/remove-dictionary-confirm/remove-dictionary-confirm.component';
 import { environment } from 'src/environments/environment';
+import { showStateTrigger } from 'src/app/helpers/animations/basic-animations';
 
 @Component({
   selector: 'app-transcribe',
@@ -29,7 +30,7 @@ import { environment } from 'src/environments/environment';
       useValue: {displayDefaultIndicatorType: false, showError: false},
     },
   ],
-  animations:[]
+  animations:[showStateTrigger]
 })
 
 export class TranscribeComponent {
@@ -227,7 +228,7 @@ export class TranscribeComponent {
   }
 
   addDictionary(): void{
-    let diag = this.diag.open(NewDictionaryComponent, { height: '50vh', width: '50vw'});
+    let diag = this.diag.open(NewDictionaryComponent);
 
     diag.afterClosed()
     .subscribe(result =>{

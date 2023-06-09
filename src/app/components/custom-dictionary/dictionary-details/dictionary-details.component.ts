@@ -10,7 +10,7 @@ import { DictionaryWordDetailsComponent } from '../dictionary-word-details/dicti
 @Component({
   selector: 'app-dictionary-details',
   templateUrl: './dictionary-details.component.html',
-  styleUrls: ['./dictionary-details.component.css']
+  styleUrls: ['./dictionary-details.component.css'],
 })
 export class DictionaryDetailsComponent {
 
@@ -58,7 +58,7 @@ export class DictionaryDetailsComponent {
   }
 
   VisualizeMobileWords(){
-    let diag = this.diag.open(DictionaryWordDetailsComponent);
+    let diag = this.diag.open(DictionaryWordDetailsComponent, {height: '80vh', width: '70vw'});
     diag.componentInstance.words = this.dictionary.words;    
   }
 }

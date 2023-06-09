@@ -13,8 +13,8 @@
               </button>
         </div>
     </div> 
-    <div *ngIf="dictionaries.length > 0">
-        <div *ngFor="let dict of dictionaries" class="container-item">
+    <div class="dictionary-container" @show *ngIf="dictionaries.length > 0">
+        <div @show *ngFor="let dict of dictionaries" class="container-item">
             <app-dictionary-details [dictionary]="dict" (deleted)="paginate()" (updated)="paginate()"></app-dictionary-details>
         </div>
     </div>    

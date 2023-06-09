@@ -8,11 +8,13 @@ import { DictionariesService } from 'src/app/services/customDictionary/dictionar
 import { NewDictionaryComponent } from '../new-dictionary/new-dictionary.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { showStateTrigger } from 'src/app/helpers/animations/basic-animations';
 
 @Component({
   selector: 'app-dictionary-main',
   templateUrl: './dictionary-main.component.html',
-  styleUrls: ['./dictionary-main.component.css']
+  styleUrls: ['./dictionary-main.component.css'],
+  animations: [showStateTrigger]
 })
 export class DictionaryMainComponent {
   constructor(private diag: MatDialog, private snackBar: MatSnackBar, private dictService: DictionariesService){}

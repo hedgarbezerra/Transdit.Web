@@ -15,12 +15,12 @@
   </div>
   
   <div class="row">
-    <div class="center-align" *ngIf="transcriptions.length <= 0">
+    <div @show class="center-align" *ngIf="transcriptions.length <= 0">
       <h2>Nada para ver aqui...</h2>
     </div>
   
-    <div *ngIf="transcriptions.length > 0">
-      <div *ngFor="let transcription of transcriptions">
+    <div @show *ngIf="transcriptions.length > 0" >
+      <div @show *ngFor="let transcription of transcriptions">
         <app-transcription-item [transcription]="transcription"></app-transcription-item>
       </div>
     </div>

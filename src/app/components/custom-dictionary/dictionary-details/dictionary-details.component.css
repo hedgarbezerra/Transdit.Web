@@ -8,11 +8,6 @@
     scrollbar-width: thin;
   }
 
-  .dictionary-detail {
-    max-height: 30vh;
-    max-width: 30vw;
-  }
-
   .dictionary-content::-webkit-scrollbar-thumb {
     border-radius: 100px;
     background-color: whitesmoke;
@@ -23,4 +18,17 @@
     border-radius: 100px;
   }
 
+  .dictionary-detail {
+    max-height: 30vh;
+    max-width: 30vw;
+  }
+
+}
+.dictionary-detail{  
+  transition: all .3s ease-in-out;
+}
+.dictionary-detail:hover{
+  transform: scale(1.05);
+  border-width: .8px;
+  border-color: var(--main-bg-color);
 }

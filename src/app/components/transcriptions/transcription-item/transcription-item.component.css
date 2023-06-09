@@ -12,4 +12,10 @@
   min-height: 150px;
 }
 
-button:focus { background-color: revert !important}
+.transcription-item {
+  transition: all .3s ease-in-out;
+}
+
+.transcription-item:hover{
+  transform: scale(1.05);
+}

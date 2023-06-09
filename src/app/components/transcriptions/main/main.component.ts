@@ -7,11 +7,13 @@ import { Pagination } from 'src/app/classes/PaginatedResult';
 import { TranscriptionsService } from 'src/app/services/transcriptions/transcriptions.service';
 import { FormControl } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
+import { showStateTrigger } from 'src/app/helpers/animations/basic-animations';
 
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
-  styleUrls: ['./main.component.css']
+  styleUrls: ['./main.component.css'],
+  animations:[showStateTrigger]
 })
 export class MainComponent {
 constructor(private dialog: MatDialog, private transcriber: TranscriptionsService){}

@@ -28,14 +28,14 @@
         </div>
       </div>
 
-      <div class="row" *ngIf="firstPageFormG.valid">
+      <div class="row" @show *ngIf="firstPageFormG.valid" >
         <div class="col s12">
           <h3>Deseja limitar o tempo da transcrição?</h3>
           <mat-slide-toggle color="primary" [(ngModel)]="showTimeRange" [ngModelOptions]="{standalone: true}">
           </mat-slide-toggle>
         </div>
       </div>          
-      <div class="row" *ngIf="showTimeRange && (!firstPageFormG.touched || (firstPageFormG.touched && firstPageFormG.valid))">
+      <div class="row" @show *ngIf="showTimeRange && (!firstPageFormG.touched || (firstPageFormG.touched && firstPageFormG.valid))">
         <div class="col s6">
           <label for="startTime">Inicio:</label>
           <input id="startTime" type="time" step="1" formControlName="rangeStartTime"/>
@@ -105,7 +105,7 @@
           </mat-slide-toggle>
         </div>
       </div>
-      <div *ngIf="showHints">
+      <div @show *ngIf="showHints">
         <div class="row">
           <div class="col s10 l10">
             <mat-form-field appearance="fill">
@@ -170,7 +170,7 @@
             Utilizar idiomas adicionais?</mat-slide-toggle>
         </div>
       </div>
-      <div class="row" *ngIf="showAdditionalLanguages">
+      <div @show class="row" *ngIf="showAdditionalLanguages">
         <div class="col s12 l6">
           <mat-form-field appearance="fill">
           <mat-label>Idiomas adicionais</mat-label>

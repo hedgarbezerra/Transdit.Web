@@ -22,6 +22,6 @@
   </div>
 </div>
 
-<div class="container">
-  <router-outlet name="users"></router-outlet>
+<div class="container" [@usersRouteAnimations]="prepareRoute(usersOutlet)">
+  <router-outlet name="users" #usersOutlet="outlet"></router-outlet>
 </div>
