@@ -13,6 +13,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   flex: 1 0 auto;
 }
 
+.main-inner{
+  min-height: 80vh;
+}
+
 .clickable{
   cursor: pointer;
 }

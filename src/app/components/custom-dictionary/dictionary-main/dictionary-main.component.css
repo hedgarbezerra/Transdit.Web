@@ -1,0 +1,11 @@
+
+div.item-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+div.container-item {
+    margin: 10px;
+    padding: 10px;
+    flex: 40%;
+}
+

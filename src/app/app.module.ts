@@ -34,11 +34,11 @@ import { ErrorHandlingHttpInterceptor } from './helpers/Interceptors/ErrorHandli
 import { PaginatorPtbrComponent, PaginatorPtbrService } from './components/main/paginator-ptbr/paginator-ptbr.component';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { TranscriptionItemExportconfirmComponent } from './components/transcriptions/transcription-item-exportconfirm/transcription-item-exportconfirm.component';
-import { LanguageCodeFlag, MomentsFromNowPipe, PercentagePipe, SecondsToPlaytimePipe } from './helpers/diretives/MomentsFromNow.pipe';
+import { BrazilianDatePipe, LanguageCodeFlag, MomentsFromNowPipe, PercentagePipe, SecondsToPlaytimePipe } from './helpers/diretives/MomentsFromNow.pipe';
 import { TranscriptionItemTranscribeconfirmComponent } from './components/transcriptions/transcription-item-transcribeconfirm/transcription-item-transcribeconfirm.component';
 import { NotFoundComponent } from './components/main/not-found/not-found.component';
 import { NewDictionaryComponent } from './components/custom-dictionary/new-dictionary/new-dictionary.component';
-import { RemoveWordConfirmComponent } from './components/custom-dictionary/remove-word-confirm/remove-word-confirm.component';
+import { RemoveDictionaryConfirmComponent } from './components/custom-dictionary/remove-dictionary-confirm/remove-dictionary-confirm.component';
 import { TranscribeConfirmComponent } from './components/transcriptions/transcribe-confirm/transcribe-confirm.component';
 import { TranscribeResultComponent } from './components/transcriptions/transcribe-result/transcribe-result.component';
 import { TranscribeResultItemComponent } from './components/transcriptions/transcribe-result-item/transcribe-result-item.component';
@@ -47,6 +47,10 @@ import { GoogleLoginProvider, GoogleSigninButtonModule, MicrosoftLoginProvider, 
 import { environment } from 'src/environments/environment';
 import { LanguageInterceptor } from './helpers/Interceptors/LanguageInterceptor';
 import { FooterLanguageSelectorComponent } from './components/main/footer-language-selector/footer-language-selector.component';
+import { DictionaryMainComponent } from './components/custom-dictionary/dictionary-main/dictionary-main.component';
+import { DictionaryDetailsComponent } from './components/custom-dictionary/dictionary-details/dictionary-details.component';
+import { DictionaryDetailsEditComponent } from './components/custom-dictionary/dictionary-details-edit/dictionary-details-edit.component';
+import { DictionaryWordDetailsComponent } from './components/custom-dictionary/dictionary-word-details/dictionary-word-details.component';
 
 
 @NgModule({
@@ -74,16 +78,21 @@ import { FooterLanguageSelectorComponent } from './components/main/footer-langua
     TranscriptionItemTranscribeconfirmComponent,
     NotFoundComponent,
     NewDictionaryComponent,
-    RemoveWordConfirmComponent,
+    RemoveDictionaryConfirmComponent,
     TranscribeConfirmComponent,
     TranscribeResultComponent,
     TranscribeResultItemComponent,
-
+    
+    BrazilianDatePipe,
     MomentsFromNowPipe,
     SecondsToPlaytimePipe,
     PercentagePipe,
     LanguageCodeFlag,
     FooterLanguageSelectorComponent,
+    DictionaryMainComponent,
+    DictionaryDetailsComponent,
+    DictionaryDetailsEditComponent,
+    DictionaryWordDetailsComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { TranscriptionItem } from 'src/app/classes/Transcriptions/TranscriptionItem';
 
 @Component({
   selector: 'app-transcription-item-transcribeconfirm',
@@ -7,4 +8,6 @@ import { Component } from '@angular/core';
 })
 export class TranscriptionItemTranscribeconfirmComponent {
 
+  @Input()
+  transcription!: TranscriptionItem;
 }

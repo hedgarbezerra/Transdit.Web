@@ -16,7 +16,7 @@ import { Observable, map, startWith, tap } from 'rxjs';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { MatStepper } from '@angular/material/stepper';
 import { TranscribeConfirmComponent } from '../transcribe-confirm/transcribe-confirm.component';
-import { RemoveWordConfirmComponent } from '../../custom-dictionary/remove-word-confirm/remove-word-confirm.component';
+import { RemoveDictionaryConfirmComponent } from '../../custom-dictionary/remove-dictionary-confirm/remove-dictionary-confirm.component';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -256,7 +256,7 @@ export class TranscribeComponent {
     if(!dict)
       return;
 
-    let diag = this.diag.open(RemoveWordConfirmComponent);
+    let diag = this.diag.open(RemoveDictionaryConfirmComponent);
     diag.componentInstance.dict = dict;
     diag.afterClosed()
     .subscribe(result =>{

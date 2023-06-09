@@ -1,7 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { OutDictionary, Dictionary, DictionaryWord } from 'src/app/classes/Dictionaries/Dictionaries';
+import { DictionaryPaginatedResult } from 'src/app/classes/Dictionaries/DictionaryPaginatedResult';
+import { Pagination } from 'src/app/classes/PaginatedResult';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -41,5 +43,17 @@ export class DictionariesService {
   DeleteWord(idDictionary: number, idWord: number){
     return this.httpClient.delete(`${environment.apiUrl}/dictionaries/${idDictionary}/words/${idWord}`, );
   }
+  
+  Paginate(pagination: Pagination): Observable<DictionaryPaginatedResult>{
+    let params = new HttpParams()
+      .set('index', pagination.index)
+      .set('size', pagination.size);
 
+    if(pagination.searchTerm.length > 0)
+      params = params.set('searchTerm', pagination.searchTerm);
+
+    let options = { params }
+
+    return this.httpClient.get<DictionaryPaginatedResult>(`${environment.apiUrl}/dictionaries/paginate`, options);
+  }
 }

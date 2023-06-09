@@ -1,6 +1,9 @@
 <nav class="nav-main" *ngIf="isAuthenticated">
   <div class="nav-wrapper">
-    <a routerLink="/app" class="brand-logo"><i class="material-icons">home</i>Início</a>
+    <a routerLink="/app" class="brand-logo">
+      <img src="favicon.ico" alt="site logo">
+      Transdit
+    </a>
     <ul class="right hide-on-med-and-down">
       <li [routerLinkActive]="'active'"><a routerLink="/app/transcricoes"><i class="material-icons left">transcribe</i>Transcrições</a></li>
       <li [routerLinkActive]="'active'"><a routerLink="/app/dicionarios"><i class="material-icons left">menu_book</i>Dicionários</a></li>
@@ -23,7 +26,9 @@
 
 <nav class="nav-main" *ngIf="!isAuthenticated">
   <div class="nav-wrapper">
-    <span routerLink="/" class="brand-logo center">Transdit</span>
+    <a routerLink="/" class="brand-logo">
+      <img src="favicon.ico" alt="site logo">
+      Transdit</a>
     <ul class="right hide-on-med-and-down">
       <li [routerLinkActive]="'active'"><a routerLink="cadastro"><i class="material-icons left">person_add</i>Cadastro</a></li>
       <li [routerLinkActive]="'active'"><a routerLink="login"><i class="material-icons right">login</i>Login</a></li>

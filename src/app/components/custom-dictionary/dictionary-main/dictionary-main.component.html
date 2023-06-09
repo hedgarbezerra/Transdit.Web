@@ -1,0 +1,25 @@
+<div class="main-inner">
+    <div class="row">
+        <div class="col s10">
+            <mat-form-field appearance="outline">
+                <mat-label>Pesquisar</mat-label>
+                <input type="search" matInput placeholder="nome do dicionário" [formControl]="searchTerm" >
+                <mat-icon matSuffix>search</mat-icon>
+            </mat-form-field>
+        </div>
+        <div class="col s2">
+            <button mat-fab color="primary" matTooltip="Novo dicionário"  aria-label="botão para adicionar novo dicionário" class="right" (click)="addDictionary()">
+                <mat-icon>add</mat-icon>
+              </button>
+        </div>
+    </div> 
+    <div *ngIf="dictionaries.length > 0">
+        <div *ngFor="let dict of dictionaries" class="container-item">
+            <app-dictionary-details [dictionary]="dict" (deleted)="paginate()" (updated)="paginate()"></app-dictionary-details>
+        </div>
+    </div>    
+    <div class="row" *ngIf="dictionaries.length <= 0">
+        <h3>Nenhum dicionário, que tal adicionar um novo?</h3>
+    </div>
+</div>
+<app-paginator-ptbr [pagination]="pagination" (paginated)="handlePageEvent($event)"></app-paginator-ptbr>

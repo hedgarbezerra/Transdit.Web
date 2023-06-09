@@ -5,7 +5,7 @@ export interface Dictionary {
 
 export interface OutDictionary extends Dictionary{
   id: number
-  date: string
+  date: Date
   words: DictionaryWord[]
 }
 

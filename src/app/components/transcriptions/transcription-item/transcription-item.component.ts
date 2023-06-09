@@ -29,54 +29,21 @@ export class TranscriptionItemComponent {
   }
 
   exportPdf(){
-    let diag = this.dialog.open(TranscriptionItemExportconfirmComponent);
-    diag.componentInstance.format = 'PDF';
-    diag.afterClosed()
-    .subscribe(res => {
-      if(res){
-        this.exportService.ExportTranscriptionResult(this.transcription.result, ExportFormat.PDF)
-        .subscribe(res => {
-            var bytes = base64ToArrayBuffer(res);
-            saveData(bytes, 'application/pdf', `${this.transcription.name}.pdf`);
-        })
-      }
-    })
+    this.exportService.exportPdf(this.transcription.name, this.transcription.result)
   }
 
   exportTxt(){
-    let diag = this.dialog.open(TranscriptionItemExportconfirmComponent);
-    diag.componentInstance.format = 'TXT';
-
-    diag.afterClosed()
-    .subscribe(res => {
-      if(res){
-        this.exportService.ExportTranscriptionResult(this.transcription.result, ExportFormat.TXT)
-        .subscribe(res => {
-          var bytes = base64ToArrayBuffer(res);
-          saveData(bytes, 'text/plain',  `${this.transcription.name}.txt`);
-        })
-      }
-    });
+    this.exportService.exportTxt(this.transcription.name, this.transcription.result)
   }
 
   exportDocx(){
-    let diag = this.dialog.open(TranscriptionItemExportconfirmComponent);
-    diag.componentInstance.format = 'DOCX'
-
-    diag.afterClosed()
-    .subscribe(res => {
-      if(res){
-        this.exportService.ExportTranscriptionResult(this.transcription.result, ExportFormat.DOCX)
-        .subscribe(res =>{
-          var bytes = base64ToArrayBuffer(res);
-          saveData(bytes, 'application/vnd.openxmlformats',  `${this.transcription.name}.docx`);
-        })
-      }
-    });
+    this.exportService.exportDocx(this.transcription.name, this.transcription.result)
   }
 
   TranscreverStorage(){
     let diag = this.dialog.open(TranscriptionItemTranscribeconfirmComponent);
+    diag.componentInstance.transcription = this.transcription;
+    
     diag.afterClosed()
     .subscribe(res =>{
       if(res){

@@ -1,5 +1,8 @@
-<h3 mat-dialog-title>Deseja transcrever novamente utilizando arquivo salvo?</h3>
-<mat-dialog-actions>
-  <button mat-button [mat-dialog-close]="false">Cancelar</button>
-  <button mat-button [mat-dialog-close]="true">Sim</button>
+<div mat-dialog-title>Deseja transcrever novamente <em *ngIf="transcription">'{{transcription.name}}'</em> utilizando arquivo salvo?</div>
+<mat-dialog-content>
+  <p>O processo de transcrição pode levar alguns minutos dependendo do tamanho do arquivo.</p>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button color="warn" [mat-dialog-close]="false">Cancelar</button>
+  <button mat-flat-button color="primary" [mat-dialog-close]="true">Transcrever</button>
 </mat-dialog-actions>

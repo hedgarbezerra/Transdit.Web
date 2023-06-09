@@ -1,0 +1,6 @@
+<div mat-dialog-title>Deseja atualizar o dicionário <em *ngIf="dictionary">'{{dictionary.name}}'</em></div>
+<div mat-dialog-content>This dialog showcases the title, close, content and actions elements.</div>
+<div mat-dialog-actions align="end">
+  <button mat-button color="warn" mat-dialog-close>Cancelar</button>
+  <button mat-flat-button color="primary" [mat-dialog-close]="true">Atualizar</button>
+</div>

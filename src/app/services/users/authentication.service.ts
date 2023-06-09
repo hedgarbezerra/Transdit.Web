@@ -47,8 +47,8 @@ export class AuthenticationService {
   }
   
   async logout(){
-    this.snackBar.open('Você está sendo desconectado...', 'Fechar', { duration: 2000, verticalPosition: 'top'});
-    setTimeout(() => this.router.navigate(['/login']), 2000);
+    this.snackBar.open('Você está sendo desconectado...', 'Fechar', { duration: 1000, verticalPosition: 'top'});
+    setTimeout(() => this.router.navigate(['/login']), 1000);
 
     localStorage.clear();
     this.socialAuth.signOutExternal();

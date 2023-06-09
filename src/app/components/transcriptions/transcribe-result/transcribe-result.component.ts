@@ -70,67 +70,18 @@ constructor(private exportService: ExportService, private dialog: MatDialog, pri
   }
 
   exportPdf(){
-    let diag = this.dialog.open(TranscriptionItemExportconfirmComponent);
-    diag.componentInstance.format = 'PDF';
-    diag.afterClosed()
-    .subscribe((res: any) => {
-      if(res){
-        let content = this.getContent() ?? '';
-        if(!content){
-          this.snackBar.open('O conteúdo à ser transcrito parece estar vazio.', 'Fechar');
-          return;
-        }
-
-        this.exportService.ExportTranscriptionResult(content, ExportFormat.PDF)
-        .subscribe(res => {
-            var bytes = base64ToArrayBuffer(res);
-            saveData(bytes, 'application/pdf', `${this.name}.pdf`);
-        })
-      }
-    })
+    let content = this.getContent() ?? '';
+    this.exportService.exportPdf(this.name, content);
   }
 
   exportTxt(){
-    let diag = this.dialog.open(TranscriptionItemExportconfirmComponent);
-    diag.componentInstance.format = 'TXT';
-
-    diag.afterClosed()
-    .subscribe((res: any) => {
-      if(res){
-        let content = this.getContent() ?? '';
-        if(!content){
-          this.snackBar.open('O conteúdo à ser transcrito parece estar vazio.', 'Fechar');
-          return;
-        }
-
-        this.exportService.ExportTranscriptionResult(content, ExportFormat.TXT)
-        .subscribe(res => {
-          var bytes = base64ToArrayBuffer(res);
-          saveData(bytes, 'text/plain',  `${this.name}.txt`);
-        })
-      }
-    });
+    let content = this.getContent() ?? '';
+    this.exportService.exportTxt(this.name, content);
   }
 
   exportDocx(){
-    let diag = this.dialog.open(TranscriptionItemExportconfirmComponent);
-    diag.componentInstance.format = 'DOCX'
-
-    diag.afterClosed()
-    .subscribe((res: any) => {
-      if(res){
-        let content = this.getContent() ?? '';
-        if(!content){
-          this.snackBar.open('O conteúdo à ser transcrito parece estar vazio.', 'Fechar');
-          return;
-        }
-
-        this.exportService.ExportTranscriptionResult(content, ExportFormat.DOCX)
-        .subscribe(res =>{
-          var bytes = base64ToArrayBuffer(res);
-          saveData(bytes, 'application/vnd.openxmlformats',  `${this.name}.docx`);
-        })
-      }
-    });
+    let content = this.getContent() ?? '';
+    this.exportService.exportDocx(this.name, content);
   }
+  
 }

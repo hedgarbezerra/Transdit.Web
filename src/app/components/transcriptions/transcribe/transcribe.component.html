@@ -107,7 +107,7 @@
       </div>
       <div *ngIf="showHints">
         <div class="row">
-          <div class="col s12 l8">
+          <div class="col s10 l10">
             <mat-form-field appearance="fill">
               <mat-label>Selecione o dicionário desejado</mat-label>
               <mat-select formControlName="customDictionaryId" required>
@@ -119,17 +119,13 @@
               <mat-error *ngIf="customDictionaryIdForm.hasError('required')">Selecione um dicionário</mat-error>
             </mat-form-field>
           </div>
-          <div class="col s6 l1">
-            <button type="button" matSuffix mat-fab color="primary" aria-label="Novo dicionário" matTooltip="Adicionar novo dicionário" (click)="addDictionary()">
+          <div class="col s2 l2">
+            <button type="button" matSuffix mat-mini-fab color="primary" aria-label="Novo dicionário" matTooltip="Adicionar novo dicionário" (click)="addDictionary()">
               <mat-icon>add</mat-icon>
             </button>
           </div>
-          <div class="col s6 l1">
-            <button type="button" mat-fab color="warn" aria-label="Apagar dicionário" matTooltip="Apagar dicionário {{selectedDictionary?.name ?? ''}}" (click)="removeDictionary(selectedDictionary)">
-              <mat-icon>cancel</mat-icon>
-            </button>
-          </div>
         </div>
+        
         <div class="row">
           <div class="col s12 l6">
             <mat-label>Impacto do dicionário

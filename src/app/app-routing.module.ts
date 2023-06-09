@@ -14,7 +14,7 @@ import { guards } from './services/users/authentication.service';
 import { UseinformationsComponent } from './components/main/useinformations/useinformations.component';
 import { UsetermsComponent } from './components/main/useterms/useterms.component';
 import { NotFoundComponent } from './components/main/not-found/not-found.component';
-import { NewDictionaryComponent } from './components/custom-dictionary/new-dictionary/new-dictionary.component';
+import { DictionaryMainComponent } from './components/custom-dictionary/dictionary-main/dictionary-main.component';
 
 const routes: Routes = [
   {
@@ -68,7 +68,12 @@ const routes: Routes = [
       },
       {
         path: 'dicionarios',
-        component: NewDictionaryComponent
+        children:[
+          {
+            path: '',
+            component: DictionaryMainComponent
+          }
+        ]
       }
     ]
   },

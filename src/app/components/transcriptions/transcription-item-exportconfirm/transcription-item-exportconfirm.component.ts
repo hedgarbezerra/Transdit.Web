@@ -9,4 +9,6 @@ export class TranscriptionItemExportconfirmComponent {
 
   @Input()
   format!: string;
+  @Input()
+  transcriptionName!: string;
 }

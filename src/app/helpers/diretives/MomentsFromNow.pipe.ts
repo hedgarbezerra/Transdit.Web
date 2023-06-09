@@ -15,6 +15,17 @@ export class MomentsFromNowPipe  implements PipeTransform{
   }
 }
 
+@Pipe({name: 'braziliandate'})
+export class BrazilianDatePipe  implements PipeTransform{
+  constructor() { }
+
+  transform(value: Date, ...args: any[]) : string {
+    let valueAsMoment = moment(value);
+
+    return valueAsMoment.format('[Em ]DD/MM/yyyy')
+  }
+}
+
 @Pipe({name: 'playtime'})
 export class SecondsToPlaytimePipe  implements PipeTransform{
   constructor() {  }

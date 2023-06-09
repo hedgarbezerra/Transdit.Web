@@ -1,0 +1,22 @@
+<mat-card class="dictionary-detail">   
+    <mat-card-actions>
+        <button mat-icon-button color="primary" aria-label="Edição do dicionário" (click)="EditDictionary()">
+            <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" aria-label="Exclui dicionário" (click)="RemoveDictionary()">
+            <mat-icon>delete_forever</mat-icon>
+        </button>
+    </mat-card-actions> 
+    <mat-card-header>
+      <mat-card-title>{{dictionary.name}}</mat-card-title>
+      <mat-card-subtitle>{{dictionary.description}}</mat-card-subtitle>
+      <mat-card-subtitle>{{dictionary.date | braziliandate}}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content class="dictionary-content hide-on-med-and-down">        
+        <app-dictionary-word-details [words]="dictionary.words"></app-dictionary-word-details>
+    </mat-card-content>
+
+    <mat-card-actions class="hide-on-large-only">
+        <button type="button" mat-raised-button (click)="VisualizeMobileWords()" [disabled]="dictionary.words.length == 0">Ver conteúdo</button>
+    </mat-card-actions>
+</mat-card>

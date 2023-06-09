@@ -1,0 +1,8 @@
+<div mat-dialog-title>Deseja apagar o dicionário <em *ngIf="dict">'{{dict.name }}'</em>?</div>
+<mat-dialog-content class="mat-typography">
+  <p>A exclusão será permanente, deseja realmente continuar?</p>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button color="primary" [mat-dialog-close]="false">Cancelar</button>
+  <button mat-flat-button color="warn" [mat-dialog-close]="true" cdkFocusInitial>Apagar</button>
+</mat-dialog-actions>

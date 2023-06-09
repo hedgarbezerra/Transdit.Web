@@ -27,7 +27,7 @@ export class PaginatorPtbrService implements MatPaginatorIntl {
   constructor() { }
 
   changes = new Subject<void>();
-  itemsPerPageLabel = 'Transcrições por página';
+  itemsPerPageLabel = 'Itens por página';
   nextPageLabel = 'Próxima página';
   previousPageLabel = 'Página anterior';
   firstPageLabel = 'Primeira página';
