@@ -120,7 +120,7 @@ const routes: Routes = [
   {
     path: '**',
     component: NotFoundComponent,
-    data:{animation: 'notfoundPage'},
+    data:{animation: 'notFoundPage'},
   }
 ];
 

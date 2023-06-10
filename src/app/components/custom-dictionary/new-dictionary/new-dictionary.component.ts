@@ -27,10 +27,6 @@ export class NewDictionaryComponent {
     return getFormFromGroup('description', this.newDict);
   }
 
-  get wordsForm(): FormControl{
-    return getFormFromGroup('words', this.newDict);
-  }
-
   get dict() {
     return { name: this.name.value, description: this.description.value, words: this.Inputedwords}
   }

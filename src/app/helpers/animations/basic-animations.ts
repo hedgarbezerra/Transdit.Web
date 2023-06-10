@@ -9,18 +9,18 @@ const defaultSlideRightAnimations = [
       left: 0,
       width: '100%'
     })
-  ]),
+  ], {optional: true}),
   query(':enter', [
     style({ left: '-100%' })
-  ]),
-  query(':leave', animateChild()),
+  ], {optional: true}),
+  query(':leave', animateChild(), {optional: true}),
   group([
     query(':leave', [
       animate('350ms ease-out', style({ left: '100%', opacity: 0 }))
-    ]),
+    ], {optional: true}),
     query(':enter', [
       animate('350ms ease-out', style({ left: '0%' }))
-    ]),
+    ], {optional: true}),
     query('@*', animateChild(), {optional: true})
   ]),
 ];
@@ -67,25 +67,20 @@ export const showStateTrigger = trigger('show',[
 
 export const routesAnimations =
   trigger('routeAnimations', [
-    transition('transcriptionsPage => dictionariesMainPage, dictionariesMainPage => usersMainPage, transcriptionsPage => usersMainPage', defaultSlideLeftAnimations),
+    transition('transcriptionsPage => dictionariesMainPage, dictionariesMainPage => usersMainPage, transcriptionsPage => usersMainPage, signupPage =>loginPage', defaultSlideLeftAnimations),   
+    transition('* => notFoundPage', [
+      query(':enter', [
+        style({ transform: 'scale(.3)' }),
+        animate('0.55s ease-in-out', style({ transform: 'scale(1)' }))])
+    ]),
     transition('* <=> *', defaultSlideRightAnimations),
-    transition('* => notfoundPage', []),//TODO: Animação de pop https://codepen.io/Jtwa/pen/dYvLpN
   ]);
 
 export const usersRoutingAnimations = trigger('usersRouteAnimations', [
-  transition('* <=> *', [    
-    query(':enter, :leave', style({ position: 'fixed', width:'100%' }),{optional: true}),
-    group([ 
-      query(':enter', [
-        style({ transform: 'translateX(100%)' }),
-        animate('0.35s ease-in-out', style({ transform: 'translateX(0%)' }))
-      ],{optional: true}),
-      query(':leave', [
-        style({ transform: 'translateX(0%)' }),
-        animate('0.35s ease-in-out', style({ transform: 'translateX(-100%)' }))
-      ],{optional: true}),
-    ])
-  ])
+  transition('usersEmailPage => usersPasswordPage, usersEmailPage => usersPlanPage, usersPasswordPage=> usersPlanPage',
+   defaultSlideLeftAnimations),
+   transition('* <=> *',
+   defaultSlideRightAnimations),
 ]);
 
 export const slideTransition = trigger('routeAnimations', [
