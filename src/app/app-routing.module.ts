@@ -16,6 +16,13 @@ import { UsetermsComponent } from './components/main/useterms/useterms.component
 import { NotFoundComponent } from './components/main/not-found/not-found.component';
 import { DictionaryMainComponent } from './components/custom-dictionary/dictionary-main/dictionary-main.component';
 
+/*
+Utilizando a rota de usuários como exemplo é possível entender que 'usuarios' é a entrada(pai)
+é possível que tenha um componente diretamente nela, mas caso existem 'filhos' é necessário
+ criar uma rota vazia para servir referência para o componente. No nosso caso queremos utilizar um roteamento dentro de outro roteamento,
+ por isso é necessário criar um novo nível de 'filhos' para essa rota de vazia, sendo:
+  usuarios>''(rota vazia com componente principal)>filhos(carregados em outro outlet)
+*/
 const routes: Routes = [
   {
     path: '',
@@ -53,30 +60,41 @@ const routes: Routes = [
           {
             path: '',
             component: UserMainComponent,
-            data:{animation: 'usersMainPage'}
-          },
-          {
-            path: 'email',
-            component: EmailChangeComponent,
-            data:{animation: 'usersEmailPage'},
-            outlet: 'users',
-          },
-          {
-            path: 'senha',
-            component: PasswordChangeComponent,
-            data:{animation: 'usersPasswordPage'},
-          },
-          {
-            path: 'plano',
-            component: PlanChangeComponent,
-            data:{animation: 'usersPlanPage'},
+            data:{animation: 'usersMainPage'},
+            children:[              
+            {
+              path: '',
+              pathMatch: 'full',
+              redirectTo: 'app/usuarios/plano'
+            },
+            {
+              path: 'email',
+              component: EmailChangeComponent,
+              data:{animation: 'usersEmailPage'},
+            },
+            {
+              path: 'senha',
+              component: PasswordChangeComponent,
+              data:{animation: 'usersPasswordPage'},
+            },
+            {
+              path: 'plano',
+              component: PlanChangeComponent,
+              data:{animation: 'usersPlanPage'},
+            },]
           }
         ]
       },
       {
         path: 'dicionarios',
-        component: DictionaryMainComponent,
-        data:{animation: 'dictionariesMainPage'}
+        children:[
+          {
+            path:'',            
+            component: DictionaryMainComponent,
+            data:{animation: 'dictionariesMainPage'},
+            children:[]
+          }
+        ]
       }
     ],
   },
