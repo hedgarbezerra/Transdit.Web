@@ -8,6 +8,7 @@ import { Login } from 'src/app/classes/Users/Users';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SocialAuthenticationService } from './social-authentication.service';
 import { LoginTarget } from 'src/app/classes/Users/SocialAuthentication';
+import { UserData } from 'src/app/classes/Users/UserData';
 
 @Injectable({
   providedIn: 'root'
@@ -34,7 +35,15 @@ export class AuthenticationService {
     let tokenJson = JSON.parse(tokenString) as Token;
     return tokenJson;
   }
+  
+  get userInfo() : UserData | null{
+    let infoString = localStorage.getItem('user-info');
+    if(infoString == null)
+      return null;
 
+    let data = JSON.parse(infoString) as UserData;
+    return data;
+  }
   authenticate(login: Login) : Observable<AuthenticationResult>{
     return this.httpClient.post<AuthenticationResult>(`${environment.apiUrl}/authentication`, login) ;
   }

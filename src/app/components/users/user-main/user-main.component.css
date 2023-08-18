@@ -1,0 +1,5 @@
+.user-container{
+    min-height: 50vh;
+    border-top: 3.3mm ridge var(--main-bg-color);
+    border-bottom: 1.5px solid var(--main-bg-color);padding: 15px;
+}

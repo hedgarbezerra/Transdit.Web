@@ -6,6 +6,7 @@ import { LoginTarget } from 'src/app/classes/Users/SocialAuthentication';
 import { Login } from 'src/app/classes/Users/Users';
 import {  getFormFromGroup } from 'src/app/helpers/HelperFunctions';
 import { AuthenticationService } from 'src/app/services/users/authentication.service';
+import { UsersService } from 'src/app/services/users/users.service';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +14,7 @@ import { AuthenticationService } from 'src/app/services/users/authentication.ser
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  constructor(private router: Router, private authService: AuthenticationService,  private snackBar: MatSnackBar){}
+  constructor(private router: Router, private authService: AuthenticationService, private usersService: UsersService, private snackBar: MatSnackBar){}
   hidePassword: boolean = true;
 
   get email():FormControl{
@@ -38,10 +39,16 @@ export class LoginComponent {
 
           let content = JSON.stringify(authResult.data);
           localStorage.setItem('jwt-token', content);
+
+          this.usersService.AuthenticatedUserData()
+          .subscribe(data =>{
+            let content = JSON.stringify(data);
+            localStorage.setItem('user-info', content);
+          })
         }
         else
           this.snackBar.open(authResult.messages.join(' \n'), 'Fechar', { duration: 5000});
-      })
+      }).unsubscribe()
   }
 
   microsoftLogin(){

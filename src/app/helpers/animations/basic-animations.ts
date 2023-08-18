@@ -73,6 +73,11 @@ export const routesAnimations =
         style({ transform: 'scale(.3)' }),
         animate('0.55s ease-in-out', style({ transform: 'scale(1)' }))])
     ]),
+    transition('notFoundPage => *', [
+      query(':enter', [
+        style({ transform: 'scale(1)' }),
+        animate('0.55s ease-in-out', style({ transform: 'scale(0)' }))])
+    ]),
     transition('* <=> *', defaultSlideRightAnimations),
   ]);
 

@@ -1,9 +1,9 @@
 <mat-card class="dictionary-detail">   
     <mat-card-actions>
-        <button mat-icon-button color="primary" aria-label="Edição do dicionário" (click)="EditDictionary()">
+        <button mat-icon-button color="primary" matTooltip="Editar dicionário '{{dictionary.name}}'" aria-label="Edição do dicionário" (click)="EditDictionary()">
             <mat-icon>edit</mat-icon>
         </button>
-        <button mat-icon-button color="warn" aria-label="Exclui dicionário" (click)="RemoveDictionary()">
+        <button mat-icon-button color="warn" matTooltip="Excluir permanentemente dicionário '{{dictionary.name}}'" aria-label="Exclui dicionário" (click)="RemoveDictionary()">
             <mat-icon>delete_forever</mat-icon>
         </button>
     </mat-card-actions> 
