@@ -354,11 +354,14 @@ export class TranscribeComponent {
 
       input.youtubeUrl = this.url.value ?? '';
       input.fileName = this.uploadedFileName ?? '';
-      input.startTime = this.rangeStartTime.value ?? null;
-      input.endTime = this.rangeEndTime.value ?? null;
       input.additionalLanguages = this.additionalLanguagesForm.value ?? [];
       input.isConverted = this.uploadedIsConverted;
 
+      if(this.showTimeRange){        
+        input.startTime = this.rangeStartTime.value ?? null;
+        input.endTime = this.rangeEndTime.value ?? null;
+      }
+      
       if(this.showHints && this.selectedDictionary){
         let hints = this.selectedDictionary?.words.map(w => w.word) ?? [];
         input.hints = hints;

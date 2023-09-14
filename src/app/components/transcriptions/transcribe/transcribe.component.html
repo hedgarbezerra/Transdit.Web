@@ -1,4 +1,4 @@
-<mat-stepper  #stepper >
+<mat-stepper linear #stepper >
   <mat-step label="Selecione sua mídia" [stepControl]="firstPageFormG" [editable]="!isCompleted" matStepperIcon="attach_file_add" state="attach_file_add">
     <form [formGroup]="firstPageFormG">
       <div class="row">
