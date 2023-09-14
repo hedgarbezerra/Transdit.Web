@@ -47,9 +47,6 @@ export class AuthenticationService {
   authenticate(login: Login) : Observable<AuthenticationResult>{
     return this.httpClient.post<AuthenticationResult>(`${environment.apiUrl}/authentication`, login) ;
   }
-  authenticateSocial(target: LoginTarget): void{
-    this.socialAuth.authenticate(target);
-  }
 
   login(login: Login) : Observable<AuthenticationResult>{
     return this.authenticate(login);
@@ -60,7 +57,6 @@ export class AuthenticationService {
     setTimeout(() => this.router.navigate(['/login']), 500);
 
     localStorage.clear();
-    this.socialAuth.signOutExternal();
   }
 
 

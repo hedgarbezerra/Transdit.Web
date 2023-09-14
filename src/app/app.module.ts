@@ -118,21 +118,7 @@ import { DictionaryWordDetailsComponent } from './components/custom-dictionary/d
       provide: 'SocialAuthServiceConfig',
       useValue: {
         autoLogin: false,
-        providers: [
-          {
-            id: GoogleLoginProvider.PROVIDER_ID,
-            provider: new GoogleLoginProvider(
-              environment.googleClientId, { }
-            )
-          },
-          {
-            id: MicrosoftLoginProvider.PROVIDER_ID,
-            provider: new MicrosoftLoginProvider('f682f08d-5c96-47dc-b31c-8d1abb35117f', {
-              redirect_uri: 'http://localhost:4200/cadastro',
-              
-            })
-          }
-        ],
+        providers: [],
         onError: (err: any) => {
           console.error(err);
         }

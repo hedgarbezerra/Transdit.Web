@@ -48,12 +48,7 @@ export class LoginComponent {
         }
         else
           this.snackBar.open(authResult.messages.join(' \n'), 'Fechar', { duration: 5000});
-      }).unsubscribe()
+      })
   }
-
-  microsoftLogin(){
-    this.authService.authenticateSocial(LoginTarget.Microsoft);
-  }
-  
   getForm(name : string){ return getFormFromGroup(name, this.loginForm) }
 }
